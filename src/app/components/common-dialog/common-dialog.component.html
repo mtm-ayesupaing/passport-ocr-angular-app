@@ -1,0 +1,5 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>キャンセル</button>
+  <button mat-raised-button  [color]="buttonColor" (click)="doAction()">{{actionButtonLabel}}</button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+$color: (
+  "default": hsl(0, 0%, 100%),
+  "main": hsl(0, 0%, 24%),
+  "link": hsl(229, 48%, 45%),
+  "primary": hsl(229, 48%, 45%),
+);
+
+$text-color: #707070;
+$form-margin-top: 20px;
+
+$icon-color: (
+  "business": #485DD3,
+  "people": #FF6A33,
+  "location": #5CCCAA,
+  "help": #E6B64A,
+  "lock": #AC4D6E,
+  "whatshot": #F70E68, 
+  "scale": #8B2BD1,
+  "update": #4BA32A,
+  "delete": #F70E68,
+  "rollback": #707070,
+);

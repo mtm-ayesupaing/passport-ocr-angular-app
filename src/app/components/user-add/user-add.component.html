@@ -1,0 +1,39 @@
+<mat-card>
+    <h1 mat-dialog-title>Add User</h1>
+
+    <div mat-dialog-content class="content">
+        <form style="width: 100%" [formGroup]="userForms">
+            <mat-form-field class="full-width-form">
+                <mat-label>Name</mat-label>
+                <input type="name" matInput [formControl]="userForms.controls.name" placeholder="">                
+            </mat-form-field>
+            <br>
+            <mat-form-field class="full-width-form">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput [formControl]="userForms.controls.email" placeholder="">
+            </mat-form-field>
+            <!-- Password Input -->
+            <mat-form-field  class="full-width-form">
+                <input matInput type="password" formControlName="password" placeholder="パスワード">
+            </mat-form-field>
+            <!-- <br>
+            <mat-form-field appearance="fill" class="full-width-form">
+                <mat-label>権限</mat-label>
+                <mat-select [formControl]="userForms.controls.role">
+                    <mat-option *ngFor="let role of masters.ROLES" [value]="role.value" [attr.data-cy]="'memberAddRole-' + role.value">{{role.name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="userForms.controls.role.hasError('required')">
+                    {{errorMsg.FORMAT_ERROR.REQUIRED('権限')}}
+                </mat-error>
+            </mat-form-field> -->
+        </form>
+    </div>
+    <div mat-dialog-actions class="demo-button-container">
+        <button mat-raised-button (click)="addUser()" class="demo-button">
+            Save
+        </button>
+        <!-- <button mat-raised-button [disabled]="!dataSource.length" (click)="removeData()" class="demo-button">
+            Remove data
+        </button> -->
+    </div>
+</mat-card>

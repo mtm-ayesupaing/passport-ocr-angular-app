@@ -1,0 +1,103 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./variable";
+// @import "~ng-pick-datetime/assets/style/picker.min.css";
+
+html,
+body {
+  overflow: hidden;
+  height: 100%;
+  max-height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #3c3c3c;
+}
+
+h1 {
+  font-size: 28px;
+}
+h2 {
+  display: inline-block;
+  font-size: 18px;
+}
+h3 {
+  font-size: 16px;
+}
+h4 {
+  font-size: 12px;
+}
+h5 {
+  display: inline-block;
+  font-size: 10px;
+}
+
+mat-label {
+  font-size: 12px;
+}
+
+a {
+  color: map-get($color, "link");
+}
+
+p {
+  color: #3c3c3c;
+}
+
+.select-in-table {
+  width: 100px;
+  font-size: 10px;
+  margin-top: 10px;
+}
+
+.custom-mini-button {
+  font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.full-width-form {
+  width: 100%;
+  margin-top: $form-margin-top;
+}
+
+.page-description {
+  font-size: 16px;
+  color: #3c3c3c;
+}
+
+.spinner-center {
+  width: 100%;
+  text-align: center;
+  .mat-spinner {
+    display: inline-block;
+  }
+}
+
+.owl-dt-popup{
+  border: 1px solid rgba(0,0,0,.12) !important;
+  border-bottom: none !important;
+  top: 219.368px !important;
+  @media (min-width: 320px) and (max-width: 768px) {
+    max-height: 91vh;
+    overflow-y: auto;
+    top: 180px !important;
+    .owl-dt-container-row {
+      background-color: #ffffff !important;
+      border-bottom: 1px solid rgba(0,0,0,.12) !important;
+    }
+  }
+  .owl-dt-timer {
+    height: 5.5em !important;
+    padding: 0 !important;
+  }
+}
+

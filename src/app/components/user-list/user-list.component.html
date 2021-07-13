@@ -1,0 +1,60 @@
+<mat-card>
+    <h1 mat-dialog-title>User List</h1>
+    <mat-card class="ocr">
+        <input #imageInput type="file" class="form-control"
+            accept="image/*" placeholder="Select images"
+            (change)="onChangeImage($event)">
+
+        <button mat-raised-button
+            color="primary"
+            class="role-button"
+            (click)="uploadImage()">
+            process
+        </button>
+        
+    </mat-card>
+    <div class="demo-button-container">
+        <button mat-raised-button (click)="addUserDialog()" class="demo-button">
+            New
+        </button>
+        <!-- <button mat-raised-button [disabled]="!dataSource.length" (click)="removeData()" class="demo-button">
+            Remove data
+        </button> -->
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID.</th>
+            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{element.email}}</td>
+        </ng-container>
+        
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef class="notice-msg-header"></th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <div class="action">
+                    <button mat-raised-button color="default"
+                        class="edit-button"
+                        (click)="editUserDialog(element, i)">Edit</button>
+                    <button mat-raised-button color="default"
+                        class="delete-button"
+                        (click)="deleteUser(element, i)">Delete</button>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</mat-card>
