@@ -1,20 +1,38 @@
 <mat-card>
-    <h1 mat-dialog-title>Add User</h1>
+    <h1 mat-dialog-title>{{userTitle}}</h1>
 
     <div mat-dialog-content class="content">
         <form style="width: 100%" [formGroup]="userForms">
             <mat-form-field class="full-width-form">
                 <mat-label>Name</mat-label>
-                <input type="name" matInput [formControl]="userForms.controls.name" placeholder="">                
+                <input type="name" matInput [formControl]="userForms.controls.name" [(ngModel)]="modifiedUser.name" placeholder="">
+                <mat-error *ngIf="userForms.controls.name.hasError('required')">
+                    {{errorMsg.FORMAT_ERROR.REQUIRED('Name')}}
+                </mat-error>              
             </mat-form-field>
             <br>
             <mat-form-field class="full-width-form">
                 <mat-label>Email</mat-label>
-                <input type="email" matInput [formControl]="userForms.controls.email" placeholder="">
+                <input type="email" matInput [attr.disabled]="true" [formControl]="userForms.controls.email" [(ngModel)]="modifiedUser.email" placeholder="">
+                <mat-error *ngIf="userForms.controls.email.hasError('email') && !userForms.controls.email.hasError('required')">
+                    {{errorMsg.FORMAT_ERROR.DATA_FORMAT('Email', 'xxxxx@xx.xx')}}
+                </mat-error>
+                <mat-error *ngIf="userForms.controls.email.hasError('required')">
+                    {{errorMsg.FORMAT_ERROR.REQUIRED('Email')}}
+                </mat-error>
             </mat-form-field>
             <!-- Password Input -->
             <mat-form-field  class="full-width-form">
-                <input matInput type="password" formControlName="password" placeholder="パスワード">
+                <input matInput type="password" formControlName="password" placeholder="Password">
+                <mat-error *ngIf="userForms.controls.password.hasError('required')">
+                    {{errorMsg.FORMAT_ERROR.REQUIRED('Password')}}
+                </mat-error>
+                <mat-error *ngIf="userForms.controls.password.hasError('minlength')">
+                    {{errorMsg.FORMAT_ERROR.MIN_LENGTH('Password', 8)}}
+                </mat-error>
+                <mat-error *ngIf="userForms.controls.password.hasError('maxlength')">
+                    {{errorMsg.FORMAT_ERROR.MAX_LENGTH('Password', 100)}}
+                </mat-error>
             </mat-form-field>
             <!-- <br>
             <mat-form-field appearance="fill" class="full-width-form">
@@ -30,10 +48,7 @@
     </div>
     <div mat-dialog-actions class="demo-button-container">
         <button mat-raised-button (click)="addUser()" class="demo-button">
-            Save
+            {{lblUserBtn}}
         </button>
-        <!-- <button mat-raised-button [disabled]="!dataSource.length" (click)="removeData()" class="demo-button">
-            Remove data
-        </button> -->
     </div>
 </mat-card>
