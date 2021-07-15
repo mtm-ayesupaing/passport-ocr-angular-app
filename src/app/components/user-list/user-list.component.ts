@@ -23,11 +23,9 @@ export class UserListComponent implements OnInit {
   public dataSource = new MatTableDataSource<User>();
 
   public users: User[] = [];
-  public formData: FormData = new FormData();
-  public file: any;
 
   constructor(
-    private userSvc: UserService,    
+    private userSvc: UserService,
     private router: Router,
     private dialog: MatDialog,
     private dialogSvc: DialogService
@@ -72,20 +70,6 @@ export class UserListComponent implements OnInit {
 
   deleteUser(user: any, index: any): void {
     console.log("Delete :: ", user, index)
-  }
-
-  onChangeImage(event: any) {
-    this.file = event.target.files[0];
-    this.formData.append('file', this.file, this.file.name);    
-  }
-
-  uploadImage(): void {
-    console.log("FILE :: ", this.file);
-    this.userSvc.uploadImage(this.formData).subscribe((data) => {
-      console.log("HERE", data);
-    }, error => {
-      console.log('ERROR :: ', error);
-    });
   }
 
 }

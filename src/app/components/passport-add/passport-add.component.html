@@ -1,0 +1,75 @@
+<mat-card>
+    <h1 mat-dialog-title>Passport Form</h1>
+
+    <div mat-dialog-content class="content">
+        <form style="width: 100%" [formGroup]="passportForms">
+            <div class="left-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.passportType" placeholder="Passport Type">
+                </mat-form-field>
+            </div>            
+            
+            <div class="right-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.countryCode" placeholder="Country Code">
+                </mat-form-field>
+            </div>
+
+            <div class="left-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.name" placeholder="Name">
+                </mat-form-field>
+            </div>
+
+            <div class="right-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.passportNo" placeholder="Passport No.">
+                </mat-form-field>
+            </div>
+
+            <div class="left-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.nationality" placeholder="Nationality">
+                </mat-form-field>
+            </div>
+
+            <div class="right-content">
+                <mat-form-field class="dob-full-width">
+                    <input matInput [formControl]="passportForms.controls.dob" placeholder="DOB">
+                </mat-form-field>
+                <mat-form-field class="gender-full-width">
+                    <input matInput [formControl]="passportForms.controls.gender" placeholder="Gender">
+                </mat-form-field>
+            </div>
+
+            <div class="left-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.issueDate" placeholder="Date of Issue">
+                </mat-form-field>
+            </div>
+
+            <div class="right-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.expiryDate" placeholder="Date of expiry">
+                </mat-form-field>
+            </div>
+            
+            <div class="left-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.birthPlace" placeholder="Place of Birth">
+                </mat-form-field>
+            </div>
+
+            <div class="right-content">
+                <mat-form-field class="passport-full-width">
+                    <input matInput [formControl]="passportForms.controls.authority" placeholder="Authority">
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions class="demo-button-container">
+        <button mat-raised-button (click)="savePassportData()" class="demo-button">
+            Save
+        </button>
+    </div>
+</mat-card>

@@ -1,0 +1,22 @@
+<mat-card>
+    <h1 mat-dialog-title>File Upload Form</h1>
+    <div>
+        <input #imageInput type="file" class="form-control"
+            accept="image/*" placeholder="Select images"
+            (change)="onChangeImage($event)">
+        
+        <div class="image-section"><img class="passport-image" [src]="url" *ngIf="url"></div>
+        
+        <button mat-raised-button
+            color="primary"
+            class="convert-button"
+            (click)="uploadImage()">
+            Convert
+        </button>
+
+        <div>
+            <textarea class="converted-text" type="text">{{converted_data}}</textarea>
+        </div>
+    </div>
+    
+</mat-card>

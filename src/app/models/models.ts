@@ -16,3 +16,17 @@
     description: string;
     type: string;
   }
+
+  export interface Passport {
+    passport_type: string;
+    country_code: string;
+    passport_no: string;
+    name: string;
+    nationality: string;
+    dob: Date;
+    sex: string;
+    issue_date: Date;
+    expiry_date: Date;
+    pob: string;
+    authority: string;
+  }

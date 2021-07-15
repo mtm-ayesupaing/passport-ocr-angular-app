@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ImageUploadComponent } from './components/image-upload/image-upload.component';
+import { PassportAddComponent } from './components/passport-add/passport-add.component';
+import { PassportListComponent } from './components/passport-list/passport-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { AuthGuard } from './guard/auth.guard';
 
@@ -14,6 +17,21 @@ const routes: Routes = [
     path: 'users',
     // canActivate: [AuthGuard],
     component: UserListComponent
+  },
+  {
+    path: 'image-upload',
+    // canActivate: [AuthGuard],
+    component: ImageUploadComponent
+  },
+  {
+    path: 'add-passport',
+    // canActivate: [AuthGuard],
+    component: PassportAddComponent
+  },
+  {
+    path: 'passport-list',
+    // canActivate: [AuthGuard],
+    component: PassportListComponent
   },
   {
     path: '**',
