@@ -3,6 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Passport } from 'src/app/models/models';
 import { PassportService } from 'src/app/services/passport.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PassportModelService } from 'src/app/service-models/passport-model.service';
+import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.component';
 
 @Component({
   selector: 'app-passport-list',
@@ -17,7 +20,9 @@ export class PassportListComponent implements OnInit {
   public passports: Passport[] = [];
 
   constructor(
+    private dialog: MatDialog,
     private passportSvc: PassportService,
+    public passportModelSvc: PassportModelService,
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +39,6 @@ export class PassportListComponent implements OnInit {
   }
 
   showData(): void {
-    console.log("Passport Data :: ", this.passports);
     this.dataSource = new MatTableDataSource(this.passports);
     this.dataSource.paginator = this.paginator;
   }
@@ -44,7 +48,14 @@ export class PassportListComponent implements OnInit {
   }
 
   editPassport(passport: any, index: any): void {
-
+    console.log(passport);
+    this.passportModelSvc.passportData = passport;
+    const dialogRef = this.dialog.open(PassportAddComponent, {
+      width: '900px',
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      
+    });
   }
 
   deletePassport(passport: any, index: any): void {
