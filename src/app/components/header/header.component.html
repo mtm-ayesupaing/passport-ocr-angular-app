@@ -1,5 +1,26 @@
 <mat-toolbar color="primary" class="header">
   <span class="title">Passport OCR</span>
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="menu"
+    (click)="onClickMenuIcon()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon class="icon person-icon">person</mat-icon>
+      <a routerLink="/users">User</a>
+    </button>
+    <button mat-menu-item>
+      <mat-icon class="icon person-icon">transform</mat-icon>
+      <a routerLink="/image-upload">Convert Image</a>
+    </button>    
+    <button mat-menu-item>
+      <mat-icon class="icon person-icon">person</mat-icon>
+      <a routerLink="/passport-list">Passport OCR</a>
+    </button>
+  </mat-menu>
 
   <div class="pc-menu">
     <a class="menu-item right-btn" (click)="logout()">

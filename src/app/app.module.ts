@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
@@ -41,6 +42,7 @@ import { PassportListComponent } from './components/passport-list/passport-list.
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    MatMenuModule,
     ReactiveFormsModule,
     IntercepterSharedModule
   ],
