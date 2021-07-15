@@ -71,9 +71,9 @@ export class ImageUploadComponent implements OnInit {
     return new Promise(async (resolve, reject) => {
       this.uploadImgSvc.uploadImage(this.formData).subscribe(
         (res: any) => {
-          console.log(res);
           this.convertedData = res.raw_data;
           this.passportModelSvc.passportData = res;
+          this.passportModelSvc.type = 'save';
         },
         (err: any) => {
         })

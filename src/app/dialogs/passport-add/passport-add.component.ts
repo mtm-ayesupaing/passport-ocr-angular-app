@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiMessage } from 'src/app/constants/apiMessage';
 import { Passport } from 'src/app/models/models';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { PassportService } from 'src/app/services/passport.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PassportModelService } from 'src/app/service-models/passport-model.service';
@@ -62,15 +61,7 @@ export class PassportAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.passportParam = this.passportModelSvc.passportData;
-    this.getPassportType();
-  }
-
-  getPassportType(): void {
-    const passSplitStr = this.passportParam.passport_no.split(" ");
-    this.passportParam.passport_type = passSplitStr[0];
-    this.passportParam.country_code = passSplitStr[1];
-    this.passportParam.passport_no = passSplitStr[2];
-    this.passportParam.gender = this.passportParam.gender.indexOf('M') !== -1 ? 'Male' : 'Female';
+    this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
   }
 
   savePassportData(): void {
@@ -87,13 +78,22 @@ export class PassportAddComponent implements OnInit {
       birthPlace: this.passportForms.value.birthPlace,
       authority: this.passportForms.value.authority
     };
-    console.log(passport);
-    this.passportSvc.savePassport(passport).subscribe((data) => {
-      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
-      this.dialogRef.close(true);
-    }, error => {
-      console.log('ERROR :: ', error);
-    });
+    if(this.passportModelSvc.type === 'save') { // save
+      this.passportSvc.savePassport(passport).subscribe((data) => {
+        this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
+        this.dialogRef.close(true);
+      }, error => {
+        console.log('ERROR :: ', error);
+      });
+    } else {  // update
+      this.passportSvc.updatePassport(passport.passportNo, passport).subscribe((data) => {
+        this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.UPDATE_USER, environment.snackBarShowingTime);
+        this.dialogRef.close(true);
+      }, error => {
+        console.log('ERROR :: ', error);
+      });
+    }
+    
   }
 
   onCancelClick(): void {

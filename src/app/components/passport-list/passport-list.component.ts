@@ -4,6 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Passport } from 'src/app/models/models';
 import { PassportService } from 'src/app/services/passport.service';
 import { MatDialog } from '@angular/material/dialog';
+import { ApiMessage } from 'src/app/constants/apiMessage';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { environment } from '../../../environments/environment';
 import { PassportModelService } from 'src/app/service-models/passport-model.service';
 import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.component';
 
@@ -21,6 +24,8 @@ export class PassportListComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    private apiMsg: ApiMessage,
+    private snackBarSvc: SnackbarService,  
     private passportSvc: PassportService,
     public passportModelSvc: PassportModelService,
   ) { }
@@ -47,18 +52,22 @@ export class PassportListComponent implements OnInit {
 
   }
 
-  editPassport(passport: any, index: any): void {
-    console.log(passport);
+  editPassport(passport: any): void {
     this.passportModelSvc.passportData = passport;
+    this.passportModelSvc.type = 'update';
     const dialogRef = this.dialog.open(PassportAddComponent, {
       width: '900px',
     });
     dialogRef.afterClosed().subscribe(() => {
-      
     });
   }
 
-  deletePassport(passport: any, index: any): void {
-
+  deletePassport(passportNo: any): void {
+    this.passportSvc.deletePassport(passportNo).subscribe((data) => {
+      this.getPassportList();      
+      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
+    }, error => {
+      console.log('ERROR :: ', error);
+    });
   }
 }
