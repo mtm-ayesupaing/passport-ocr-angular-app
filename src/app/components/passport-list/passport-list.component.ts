@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Passport } from 'src/app/models/models';
@@ -9,6 +9,12 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { environment } from '../../../environments/environment';
 import { PassportModelService } from 'src/app/service-models/passport-model.service';
 import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.component';
+import * as moment from 'moment';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Component({
   selector: 'app-passport-list',
@@ -16,12 +22,12 @@ import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.
   styleUrls: ['./passport-list.component.scss']
 })
 export class PassportListComponent implements OnInit {
-
+  @ViewChild('table') table: ElementRef | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   public displayedColumns: string[] = ['passportNo', 'passportType', 'countryCode', 'name', 'action'];
   public dataSource = new MatTableDataSource<Passport>();
   public passports: Passport[] = [];
-
+  public csvData: any;
   constructor(
     private dialog: MatDialog,
     private apiMsg: ApiMessage,
@@ -37,6 +43,7 @@ export class PassportListComponent implements OnInit {
   getPassportList(): void {
     this.passportSvc.getPassportList('passport_no').subscribe(passports => {
       this.passports = passports;
+      this.csvData = passports;
       this.showData();
     }, error => {
       console.log('ERROR :: ', error);
@@ -69,5 +76,21 @@ export class PassportListComponent implements OnInit {
     }, error => {
       console.log('ERROR :: ', error);
     });
+  }
+
+  public exporttoExcel(): void {
+    let passports : any = [];
+    passports = this.passports;
+    const myworksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(passports);
+    const myworkbook: XLSX.WorkBook = { Sheets: { 'data': myworksheet }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(myworkbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'passport_' + moment().format('YYYYMMDDhhmmss'));
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
 }

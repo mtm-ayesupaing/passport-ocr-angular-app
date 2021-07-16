@@ -51,6 +51,7 @@ export class PassportAddComponent implements OnInit {
   });
   public passports: Passport[] = [];
   public passportParam: any;
+  public disableInput : boolean = true;
   constructor(
     private snackBarSvc: SnackbarService,    
     private apiMsg: ApiMessage,
@@ -60,11 +61,24 @@ export class PassportAddComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.disableControl();
     this.passportParam = this.passportModelSvc.passportData;
     this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
   }
 
-  savePassportData(): void {
+  disableControl(): void {
+    if (this.passportModelSvc.type === 'update') {
+      this.passportForms.controls['passportType'].disable();
+      this.passportForms.controls['passportNo'].disable();
+      this.passportForms.controls['countryCode'].disable();
+    } else {
+      this.passportForms.controls['passportType'].enable();
+      this.passportForms.controls['passportNo'].enable();
+      this.passportForms.controls['countryCode'].enable();
+    }
+  }
+
+  async savePassportData(): Promise<void> {
     const passport = {
       passportType: this.passportForms.value.passportType,
       countryCode: this.passportForms.value.countryCode,
@@ -78,7 +92,15 @@ export class PassportAddComponent implements OnInit {
       birthPlace: this.passportForms.value.birthPlace,
       authority: this.passportForms.value.authority
     };
+
     if(this.passportModelSvc.type === 'save') { // save
+      const duplicateData = await this.checkDuplicate(passport); // check duplicate
+      console.log(duplicateData);
+      if (duplicateData.length > 0) {
+        this.snackBarSvc.open('duplicate passport No', 5000);
+        return;
+      }
+      console.log('hdfdfdfdfdfd');
       this.passportSvc.savePassport(passport).subscribe((data) => {
         this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
         this.dialogRef.close(true);
@@ -92,12 +114,25 @@ export class PassportAddComponent implements OnInit {
       }, error => {
         console.log('ERROR :: ', error);
       });
-    }
-    
+    }    
+  }
+
+  async checkDuplicate(params: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const targetPeriods = [];
+      let uniquePeriod: any = [];
+      this.passportSvc.searchPassport(params.passportNo).subscribe(
+        async (datas: any) => {
+            resolve(datas);
+            return;
+        }, (error: any) => reject(error)
+      );
+    });
   }
 
   onCancelClick(): void {
     this.dialogRef.close(false);
   }
+  
 
 }
