@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiMessage } from 'src/app/constants/apiMessage';
 import { Passport } from 'src/app/models/models';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PassportService } from 'src/app/services/passport.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-
+import { PassportModelService } from 'src/app/service-models/passport-model.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -22,8 +23,6 @@ export class PassportAddComponent implements OnInit {
     ]),
     passportNo: new FormControl('', [
       Validators.required,
-      // Validators.minLength(8),
-      // Validators.maxLength(100)
     ]),
     name: new FormControl('', [
       Validators.required,
@@ -51,14 +50,18 @@ export class PassportAddComponent implements OnInit {
     ])
   });
   public passports: Passport[] = [];
-
-  constructor(    
+  public passportParam: any;
+  constructor(
     private snackBarSvc: SnackbarService,    
     private apiMsg: ApiMessage,
     private passportSvc: PassportService,
+    public dialogRef: MatDialogRef<PassportAddComponent>,
+    public passportModelSvc: PassportModelService,
   ) { }
 
   ngOnInit(): void {
+    this.passportParam = this.passportModelSvc.passportData;
+    this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
   }
 
   savePassportData(): void {
@@ -75,13 +78,26 @@ export class PassportAddComponent implements OnInit {
       birthPlace: this.passportForms.value.birthPlace,
       authority: this.passportForms.value.authority
     };
-    this.passportSvc.savePassport(passport).subscribe((data) => {
-      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
-      // this.disableFlag = false;
-      // this.dialogRef.close(true);
-    }, error => {
-      console.log('ERROR :: ', error);
-    });
+    if(this.passportModelSvc.type === 'save') { // save
+      this.passportSvc.savePassport(passport).subscribe((data) => {
+        this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
+        this.dialogRef.close(true);
+      }, error => {
+        console.log('ERROR :: ', error);
+      });
+    } else {  // update
+      this.passportSvc.updatePassport(passport.passportNo, passport).subscribe((data) => {
+        this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.UPDATE_USER, environment.snackBarShowingTime);
+        this.dialogRef.close(true);
+      }, error => {
+        console.log('ERROR :: ', error);
+      });
+    }
+    
+  }
+
+  onCancelClick(): void {
+    this.dialogRef.close(false);
   }
 
 }

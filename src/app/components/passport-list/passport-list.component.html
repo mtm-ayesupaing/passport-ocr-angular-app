@@ -35,10 +35,10 @@
                 <div class="action">
                     <button mat-raised-button color="default"
                         class="edit-button"
-                        (click)="editPassport(element, i)">Edit</button>
+                        (click)="editPassport(element)">Edit</button>
                     <button mat-raised-button color="default"
                         class="delete-button"
-                        (click)="deletePassport(element, i)">Delete</button>
+                        (click)="deletePassport(element.passport_no)">Delete</button>
                 </div>
             </td>
         </ng-container>

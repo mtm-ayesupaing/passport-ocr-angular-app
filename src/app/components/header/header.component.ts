@@ -15,6 +15,10 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onClickMenuIcon(): any {
+    
+  }
+
   logout(): void {
     this.authSvc.logout();
   }

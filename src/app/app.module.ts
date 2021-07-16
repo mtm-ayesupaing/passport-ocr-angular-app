@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
@@ -18,7 +19,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
-import { PassportAddComponent } from './components/passport-add/passport-add.component';
+import { PassportAddComponent } from './dialogs/passport-add/passport-add.component';
 import { PassportListComponent } from './components/passport-list/passport-list.component';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { PassportListComponent } from './components/passport-list/passport-list.
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    MatMenuModule,
     ReactiveFormsModule,
     IntercepterSharedModule
   ],

@@ -24,12 +24,12 @@ export class PassportService {
     return this.http.post(`${environment.apiEndpoint}savePassport`, body);
   }
 
-  updatePassport(id: number, body: any): Observable<any> {
-    return this.http.put(environment.apiEndpoint + `updatePassport/${id}`, body);
+  updatePassport(passportNo: string, body: any): Observable<any> {
+    return this.http.put(environment.apiEndpoint + `updatePassport/${passportNo}`, body);
   }
 
-  deletePassport(id: number): Observable<any> {
-    return this.http.delete(`${environment.apiEndpoint}deletePassport/${id}`);
+  deletePassport(passportNo: string): Observable<any> {
+    return this.http.delete(`${environment.apiEndpoint}deletePassport/${passportNo}`);
   }
 
 }
