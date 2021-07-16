@@ -42,6 +42,7 @@ export class ImageUploadComponent implements OnInit {
   }
 
   onChangeImage(event: any) {
+    this.formData = new FormData();
     const URL = window.URL || window.webkitURL;
     const Img = new Image();
     const filesToUpload = (event.target.files);

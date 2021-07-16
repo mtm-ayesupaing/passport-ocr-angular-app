@@ -1,19 +1,38 @@
 .image-section {
     width: 255px;
-    height: 188px;
+    height: 468px;
 }
 
 .passport-image {
-    padding-top: 5px;
-    width: 250px;
+    padding-top: 20px;
+    width: 500px;
 }
 
 .convert-button, .process-button {
-    margin-bottom: 5px;
     margin-right: 10px;
 }
 
 .converted-text {
-    width: 500px;
-    height: 350px;
+    width: 100%;
+    height: 485px;
+}
+
+.image-panel {
+    float: left;
+    width: 45vw;
+    height: 580px;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.extracted-panel {
+    float: right;
+    width: 45vw;
+    height: 580px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+  
+.upload-header-image {
+    background-size: cover;
 }
