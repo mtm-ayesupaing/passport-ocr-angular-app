@@ -3,6 +3,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Passport } from 'src/app/models/models';
 import { PassportService } from 'src/app/services/passport.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ApiMessage } from 'src/app/constants/apiMessage';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { environment } from '../../../environments/environment';
+import { PassportModelService } from 'src/app/service-models/passport-model.service';
+import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.component';
 
 @Component({
   selector: 'app-passport-list',
@@ -17,7 +23,11 @@ export class PassportListComponent implements OnInit {
   public passports: Passport[] = [];
 
   constructor(
+    private dialog: MatDialog,
+    private apiMsg: ApiMessage,
+    private snackBarSvc: SnackbarService,  
     private passportSvc: PassportService,
+    public passportModelSvc: PassportModelService,
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +44,6 @@ export class PassportListComponent implements OnInit {
   }
 
   showData(): void {
-    console.log("Passport Data :: ", this.passports);
     this.dataSource = new MatTableDataSource(this.passports);
     this.dataSource.paginator = this.paginator;
   }
@@ -43,11 +52,22 @@ export class PassportListComponent implements OnInit {
 
   }
 
-  editPassport(passport: any, index: any): void {
-
+  editPassport(passport: any): void {
+    this.passportModelSvc.passportData = passport;
+    this.passportModelSvc.type = 'update';
+    const dialogRef = this.dialog.open(PassportAddComponent, {
+      width: '900px',
+    });
+    dialogRef.afterClosed().subscribe(() => {
+    });
   }
 
-  deletePassport(passport: any, index: any): void {
-
+  deletePassport(passportNo: any): void {
+    this.passportSvc.deletePassport(passportNo).subscribe((data) => {
+      this.getPassportList();      
+      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
+    }, error => {
+      console.log('ERROR :: ', error);
+    });
   }
 }

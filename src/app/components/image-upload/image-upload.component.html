@@ -7,16 +7,29 @@
         
         <div class="image-section"><img class="passport-image" [src]="url" *ngIf="url"></div>
         
-        <button mat-raised-button
-            color="primary"
-            class="convert-button"
-            (click)="uploadImage()">
-            Convert
-        </button>
+        <div class="data-box">
+            <button mat-raised-button
+                color="primary"
+                class="convert-button"
+                [disabled]="!isGoodResolution"
+                (click)="uploadImage()">
+                Convert
+            </button>
+
+            <button mat-raised-button
+                color="primary"
+                class="process-button"
+                [disabled]="!isGoodResolution"
+                (click)="bindPassportData()">
+                Go to Passport Form
+            </button> 
+        </div>
 
         <div>
-            <textarea class="converted-text" type="text">{{converted_data}}</textarea>
+            <textarea class="converted-text" type="text">{{convertedData}}</textarea>
         </div>
+
+        
     </div>
     
 </mat-card>
