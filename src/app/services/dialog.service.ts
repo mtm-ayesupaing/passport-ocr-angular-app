@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class DialogService {
   private _updatedUser: any;
+  private _isEditUser: boolean = false;
 
   constructor() { }
 
@@ -14,6 +15,14 @@ export class DialogService {
 
   get updatedUser(): any {
     return this._updatedUser;
+  }
+
+  set isEditUser(editUser: boolean) {
+    this._isEditUser = editUser;
+  }
+
+  get isEditUser(): boolean {
+    return this._isEditUser;
   }
 
 }

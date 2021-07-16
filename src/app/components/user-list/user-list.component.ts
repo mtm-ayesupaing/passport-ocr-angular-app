@@ -9,7 +9,6 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserAddComponent } from '../user-add/user-add.component';
-import { UserEditComponent } from '../user-edit/user-edit.component';
 
 @Component({
   selector: 'app-user-list',
@@ -61,9 +60,9 @@ export class UserListComponent implements OnInit {
   }
 
   editUserDialog(user: any, index: any): void {
-    console.log("Edit :: ", user, index);
     this.dialogSvc.updatedUser = user;
-    const dialogRef = this.dialog.open(UserEditComponent, {
+    this.dialogSvc.isEditUser = true;
+    const dialogRef = this.dialog.open(UserAddComponent, {
       width: '600px',
     });
   }

@@ -17,7 +17,6 @@ import { IntercepterSharedModule } from './interceptors/interceptor-shared.modul
 import { CommonDialogComponent } from './components/common-dialog/common-dialog.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UserAddComponent } from './components/user-add/user-add.component';
-import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PassportAddComponent } from './dialogs/passport-add/passport-add.component';
 import { PassportListComponent } from './components/passport-list/passport-list.component';
@@ -30,7 +29,6 @@ import { PassportListComponent } from './components/passport-list/passport-list.
     CommonDialogComponent,
     UserListComponent,
     UserAddComponent,
-    UserEditComponent,
     ImageUploadComponent,
     PassportAddComponent,
     PassportListComponent
