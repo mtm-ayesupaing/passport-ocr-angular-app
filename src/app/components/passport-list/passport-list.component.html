@@ -11,6 +11,35 @@
             Export To Excel
         </button>
     </div>
+
+    <div class="search-container">
+        <div class="name-box">
+            <mat-form-field class="full-width">
+                <input matInput [formControl]="searchForms.controls.name" placeholder="Name">
+            </mat-form-field>
+        </div>
+        <div class="passport-no-box">
+            <mat-form-field class="full-width">
+                <input matInput [formControl]="searchForms.controls.passportNo" placeholder="Passport No">
+            </mat-form-field>
+        </div>
+        <div class="dob-box">
+            <mat-form-field class="full-width">
+                <input matInput [formControl]="searchForms.controls.expiryDate" [matDatepicker]="picker1" placeholder="Expiry Date">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="search-btn-box">
+            <button mat-raised-button
+                color="primary"
+                (click)="searchPassport()" 
+                class="search-button">
+                Search
+            </button>
+        </div>        
+    </div>
+
     <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8 passport-table">
         <ng-container matColumnDef="passportNo">
             <th mat-header-cell *matHeaderCellDef>Passport No.</th>
@@ -30,6 +59,11 @@
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{element.name}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiryDate">
+            <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+            <td mat-cell *matCellDef="let element">{{element.expiry_date}}</td>
         </ng-container>
         
         <ng-container matColumnDef="action">

@@ -62,6 +62,7 @@ export class PassportAddComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.passportParam = this.passportModelSvc.passportData;
+    console.log(this.passportParam);
     this.disableControl();  
     this.passportParam.dob = await this.getDateFormat(this.passportParam.dob);
     this.passportParam.issue_date = await this.getDateFormat(this.passportParam.issue_date);
@@ -70,25 +71,29 @@ export class PassportAddComponent implements OnInit {
   }
 
   async getDateFormat(date: any): Promise<any> {
+    console.log(date);
+    if (!date) return '';
     const dateArr = date.split(' ');
+    if (typeof dateArr[0] !== 'number') return '';
     const month = await this.convertMonth(dateArr[1]);
-    const dateRes = month + '/' + dateArr[0] + '/' + dateArr[2];
+    const dateRes = month + '/' + (typeof dateArr[0] === 'number') ? dateArr[0] : dateArr[1]  + '/' + dateArr[2];
     return dateRes;
   }
 
   async convertMonth(month: string): Promise<any> {
-    if ( month === 'JAN' )  return '1';
-    else if ( month === 'FEB' ) return '2';
-    else if ( month === 'MAR' ) return '3';
-    else if ( month === 'APR' ) return '4';
-    else if ( month === 'MAY' ) return '5';
-    else if ( month === 'JUNE' ) return '6';
-    else if ( month === 'JULY' ) return '7';
-    else if ( month === 'AUG' ) return '8';
-    else if ( month === 'SEP' ) return '9';
-    else if ( month === '0CT' ) return '10';
-    else if ( month === 'NOV' ) return '11';
-    else if ( month === 'DEC' ) return '12';
+    console.log(month);
+    if ( month === 'JAN' || month === 'Jan' )  return '1';
+    else if ( month === 'FEB' || month === 'Feb' ) return '2';
+    else if ( month === 'MAR' || month === 'Mar' ) return '3';
+    else if ( month === 'APR' || month === 'Feb') return '4';
+    else if ( month === 'MAY' || month === 'May') return '5';
+    else if ( month === 'JUNE' || month === 'June') return '6';
+    else if ( month === 'JULY' || month === 'July') return '7';
+    else if ( month === 'AUG' || month === 'Aug') return '8';
+    else if ( month === 'SEP' || month === 'Sep') return '9';
+    else if ( month === '0CT' || month === 'Oct') return '10';
+    else if ( month === 'NOV' || month === 'Nov') return '11';
+    else if ( month === 'DEC' || month === 'Dec') return '12';
   }
 
   disableControl(): void {
@@ -158,5 +163,7 @@ export class PassportAddComponent implements OnInit {
     this.dialogRef.close(false);
   }
   
-
+  public checkError = (controlName: string, errorName: string) => {
+    return this.passportForms.controls[controlName].hasError(errorName);
+  }
 }

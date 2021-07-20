@@ -37,16 +37,16 @@
 
             <div class="right-content">
                 <mat-form-field class="nationality-full-width">
-                    <input matInput [formControl]="passportForms.controls.nationality" [value]="passportParam.nationality" placeholder="Nationality">
+                    <input matInput [formControl]="passportForms.controls.nationality" [(ngModel)]="passportParam.nationality" placeholder="Nationality">
                 </mat-form-field>
                 <mat-form-field class="gender-full-width">
-                    <input matInput [formControl]="passportForms.controls.gender" [value]="passportParam.gender" placeholder="Gender">
+                    <input matInput [formControl]="passportForms.controls.gender" [(ngModel)]="passportParam.gender" placeholder="Gender">
                 </mat-form-field>
             </div>
 
             <div class="left-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [matDatepicker]="picker2" [value]="passportParam.issue_date" [formControl]="passportForms.controls.issueDate" placeholder="Choose Issue date">
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="passportParam.issue_date" [formControl]="passportForms.controls.issueDate" placeholder="Choose Issue date">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker  #picker2></mat-datepicker>
                 </mat-form-field>
@@ -74,7 +74,7 @@
         </form>
     </div>
     <div mat-dialog-actions class="demo-button-container">
-        <button mat-raised-button (click)="savePassportData()"  class="demo-button">
+        <button mat-raised-button (click)="savePassportData()" [disabled]="!passportForms.valid"  class="demo-button">
             Save
         </button>
 

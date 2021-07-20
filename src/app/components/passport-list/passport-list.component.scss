@@ -14,3 +14,19 @@
   .edit-button, .delete-button, .export-button {
     margin-left: 10px;
   }
+
+  .search-container {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -webkit-box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid rgb(135, 135, 206);
+  }
+
+  .name-box, .passport-no-box, .dob-box, .search-btn-box {
+    width: 20%;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
