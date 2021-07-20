@@ -1,14 +1,14 @@
 <mat-card>
     <h1 mat-dialog-title>User List</h1>
-    <div class="demo-button-container">
-        <button mat-raised-button (click)="addUserDialog()" class="demo-button">
+    <div class="user-button-container">
+        <button mat-raised-button (click)="addUserDialog()" class="user-button">
             New
         </button>
         <!-- <button mat-raised-button [disabled]="!dataSource.length" (click)="removeData()" class="demo-button">
             Remove data
         </button> -->
     </div>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 user-table">
         <!-- ID Column -->
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>ID.</th>
