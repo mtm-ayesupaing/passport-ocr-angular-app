@@ -97,10 +97,9 @@ export class PassportAddComponent implements OnInit {
       const duplicateData = await this.checkDuplicate(passport); // check duplicate
       console.log(duplicateData);
       if (duplicateData.length > 0) {
-        this.snackBarSvc.open('duplicate passport No', 5000);
+        this.snackBarSvc.open('Duplicate Passport No.', 5000);
         return;
       }
-      console.log('hdfdfdfdfdfd');
       this.passportSvc.savePassport(passport).subscribe((data) => {
         this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
         this.dialogRef.close(true);

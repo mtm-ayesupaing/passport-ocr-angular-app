@@ -78,7 +78,7 @@ export class PassportListComponent implements OnInit {
     });
   }
 
-  public exporttoExcel(): void {
+  public exportToExcel(): void {
     let passports : any = [];
     passports = this.passports;
     const myworksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(passports);
