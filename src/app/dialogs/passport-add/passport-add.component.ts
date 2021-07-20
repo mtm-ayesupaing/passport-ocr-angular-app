@@ -51,6 +51,7 @@ export class PassportAddComponent implements OnInit {
   });
   public passports: Passport[] = [];
   public passportParam: any;
+  public disableInput : boolean = true;
   constructor(
     private snackBarSvc: SnackbarService,    
     private apiMsg: ApiMessage,
@@ -59,12 +60,55 @@ export class PassportAddComponent implements OnInit {
     public passportModelSvc: PassportModelService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.passportParam = this.passportModelSvc.passportData;
+    console.log(this.passportParam);
+    this.disableControl();  
+    this.passportParam.dob = await this.getDateFormat(this.passportParam.dob);
+    this.passportParam.issue_date = await this.getDateFormat(this.passportParam.issue_date);
+    this.passportParam.expiry_date = await this.getDateFormat(this.passportParam.expiry_date);
     this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
   }
 
-  savePassportData(): void {
+  async getDateFormat(date: any): Promise<any> {
+    console.log(date);
+    if (!date) return '';
+    const dateArr = date.split(' ');
+    if (typeof dateArr[0] !== 'number') return '';
+    const month = await this.convertMonth(dateArr[1]);
+    const dateRes = month + '/' + (typeof dateArr[0] === 'number') ? dateArr[0] : dateArr[1]  + '/' + dateArr[2];
+    return dateRes;
+  }
+
+  async convertMonth(month: string): Promise<any> {
+    console.log(month);
+    if ( month === 'JAN' || month === 'Jan' )  return '1';
+    else if ( month === 'FEB' || month === 'Feb' ) return '2';
+    else if ( month === 'MAR' || month === 'Mar' ) return '3';
+    else if ( month === 'APR' || month === 'Feb') return '4';
+    else if ( month === 'MAY' || month === 'May') return '5';
+    else if ( month === 'JUNE' || month === 'June') return '6';
+    else if ( month === 'JULY' || month === 'July') return '7';
+    else if ( month === 'AUG' || month === 'Aug') return '8';
+    else if ( month === 'SEP' || month === 'Sep') return '9';
+    else if ( month === '0CT' || month === 'Oct') return '10';
+    else if ( month === 'NOV' || month === 'Nov') return '11';
+    else if ( month === 'DEC' || month === 'Dec') return '12';
+  }
+
+  disableControl(): void {
+    if (this.passportModelSvc.type === 'update') {
+      this.passportForms.controls['passportType'].disable();
+      this.passportForms.controls['passportNo'].disable();
+      this.passportForms.controls['countryCode'].disable();
+    } else {
+      this.passportForms.controls['passportType'].enable();
+      this.passportForms.controls['passportNo'].enable();
+      this.passportForms.controls['countryCode'].enable();
+    }
+  }
+
+  async savePassportData(): Promise<void> {
     const passport = {
       passportType: this.passportForms.value.passportType,
       countryCode: this.passportForms.value.countryCode,
@@ -78,7 +122,14 @@ export class PassportAddComponent implements OnInit {
       birthPlace: this.passportForms.value.birthPlace,
       authority: this.passportForms.value.authority
     };
+
     if(this.passportModelSvc.type === 'save') { // save
+      const duplicateData = await this.checkDuplicate(passport); // check duplicate
+      console.log(duplicateData);
+      if (duplicateData.length > 0) {
+        this.snackBarSvc.open('Duplicate Passport No.', 5000);
+        return;
+      }
       this.passportSvc.savePassport(passport).subscribe((data) => {
         this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
         this.dialogRef.close(true);
@@ -92,12 +143,27 @@ export class PassportAddComponent implements OnInit {
       }, error => {
         console.log('ERROR :: ', error);
       });
-    }
-    
+    }    
+  }
+
+  async checkDuplicate(params: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const targetPeriods = [];
+      let uniquePeriod: any = [];
+      this.passportSvc.searchPassport(params.passportNo).subscribe(
+        async (datas: any) => {
+            resolve(datas);
+            return;
+        }, (error: any) => reject(error)
+      );
+    });
   }
 
   onCancelClick(): void {
     this.dialogRef.close(false);
   }
-
+  
+  public checkError = (controlName: string, errorName: string) => {
+    return this.passportForms.controls[controlName].hasError(errorName);
+  }
 }

@@ -5,7 +5,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './pages/auth/auth.component';
 
@@ -41,6 +44,10 @@ import { PassportListComponent } from './components/passport-list/passport-list.
     FormsModule,
     HttpClientModule,
     MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
     ReactiveFormsModule,
     IntercepterSharedModule
   ],

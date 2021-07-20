@@ -23,19 +23,21 @@
 
             <div class="right-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.passportNo" [(ngModel)]="passportParam.passport_no"  placeholder="Passport No.">
+                    <input matInput [formControl]="passportForms.controls.passportNo" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.">
                 </mat-form-field>
             </div>
 
             <div class="left-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.nationality" [(ngModel)]="passportParam.nationality" placeholder="Nationality">
+                    <input matInput [matDatepicker]="picker1" [value]="passportParam.dob" [formControl]="passportForms.controls.dob" placeholder="Choose DOB">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
             </div>
 
             <div class="right-content">
-                <mat-form-field class="dob-full-width">
-                    <input matInput [formControl]="passportForms.controls.dob" [(ngModel)]="passportParam.dob"  placeholder="DOB">
+                <mat-form-field class="nationality-full-width">
+                    <input matInput [formControl]="passportForms.controls.nationality" [(ngModel)]="passportParam.nationality" placeholder="Nationality">
                 </mat-form-field>
                 <mat-form-field class="gender-full-width">
                     <input matInput [formControl]="passportForms.controls.gender" [(ngModel)]="passportParam.gender" placeholder="Gender">
@@ -44,13 +46,17 @@
 
             <div class="left-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.issueDate" [(ngModel)]="passportParam.issue_date" placeholder="Date of Issue">
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="passportParam.issue_date" [formControl]="passportForms.controls.issueDate" placeholder="Choose Issue date">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker  #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
 
             <div class="right-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.expiryDate" [(ngModel)]="passportParam.expiry_date"  placeholder="Date of expiry">
+                    <input matInput [matDatepicker]="picker3" [(ngModel)]="passportParam.expiry_date" [formControl]="passportForms.controls.expiryDate" placeholder="Choose Expiry Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
             </div>
             
@@ -68,8 +74,12 @@
         </form>
     </div>
     <div mat-dialog-actions class="demo-button-container">
-        <button mat-raised-button (click)="savePassportData()"  class="demo-button">
+        <button mat-raised-button (click)="savePassportData()" [disabled]="!passportForms.valid"  class="demo-button">
             Save
+        </button>
+
+        <button mat-raised-button (click)="onCancelClick()"  class="cancel-button">
+            Cancel
         </button>
     </div>
 </mat-card>
