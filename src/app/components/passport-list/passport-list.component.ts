@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Passport } from 'src/app/models/models';
 import { PassportService } from 'src/app/services/passport.service';
 import { MatDialog } from '@angular/material/dialog';
+import { Router} from '@angular/router';
 import { ApiMessage } from 'src/app/constants/apiMessage';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { environment } from '../../../environments/environment';
@@ -30,6 +31,7 @@ export class PassportListComponent implements OnInit {
   public csvData: any;
   constructor(
     private dialog: MatDialog,
+    public router: Router,
     private apiMsg: ApiMessage,
     private snackBarSvc: SnackbarService,  
     private passportSvc: PassportService,
@@ -56,7 +58,7 @@ export class PassportListComponent implements OnInit {
   }
 
   goToPassportForm(): void {
-
+    this.router.navigate(['/image-upload']);
   }
 
   editPassport(passport: any): void {
