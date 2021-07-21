@@ -36,4 +36,8 @@ export class UserService {
     return this.http.post(`${environment.apiEndpoint}upload`, body);
   }
 
+  searchUser(body: any): Observable<any> {
+    return this.http.post(`${environment.apiEndpoint}searchUser`, body);
+  }
+
 }

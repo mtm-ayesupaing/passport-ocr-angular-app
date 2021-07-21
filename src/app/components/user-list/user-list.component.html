@@ -1,12 +1,24 @@
 <mat-card>
     <h1 mat-dialog-title>User List</h1>
-    <div class="user-button-container">
-        <button mat-raised-button (click)="addUserDialog()" class="user-button">
-            New
-        </button>
-        <!-- <button mat-raised-button [disabled]="!dataSource.length" (click)="removeData()" class="demo-button">
-            Remove data
-        </button> -->
+    <div class="search-container">
+        <div class="name-box">
+            <mat-form-field class="full-width">
+                <input matInput [formControl]="searchForms.controls.name" placeholder="Name">
+            </mat-form-field>
+        </div>
+        <div class="email-box">
+            <mat-form-field class="full-width">
+                <input matInput [formControl]="searchForms.controls.email" placeholder="Email">
+            </mat-form-field>
+        </div>
+        <div class="search-btn-box">
+            <button mat-raised-button color="primary" (click)="searchUser()" class="search-button">
+                Search
+            </button>
+            <button mat-raised-button color="primary" (click)="addUserDialog()" class="user-button">
+                New
+            </button>
+        </div>        
     </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 user-table">
         <!-- ID Column -->
@@ -44,4 +56,5 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
 </mat-card>

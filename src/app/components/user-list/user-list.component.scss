@@ -2,15 +2,30 @@
   width: 100%;
 }
 
-.user-button-container {
-  margin-top: 8px;
-  padding-bottom: 16px;
+tr.mat-row, tr.mat-footer-row {
+  height: 46px;
 }
 
-.user-button + .user-button {
+.user-button {
   margin-left: 8px;
 }
 
 .edit-button {
-  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.search-container {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  -box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid rgb(135, 135, 206);
+}
+
+.name-box, .email-box, .search-btn-box {
+  width: 20%;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
 }

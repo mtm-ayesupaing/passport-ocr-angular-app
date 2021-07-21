@@ -80,10 +80,13 @@ export class UserAddComponent implements OnInit {
     };
     if (!this.isEdit) {
       this.userSvc.addUser(user).subscribe((data) => {
-        this.users.unshift(data);
-        this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
-        this.disableFlag = false;
-        this.dialogRef.close(true);
+        if (data.includes("Duplicate Email!")) {
+          this.snackBarSvc.open(data, environment.snackBarShowingTime);
+        } else {
+          this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
+          this.disableFlag = false;
+          this.dialogRef.close(true);
+        }        
       }, error => {
         console.log('ERROR :: ', error);
       });

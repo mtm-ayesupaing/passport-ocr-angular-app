@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,6 +21,10 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   public displayedColumns: string[] = ['id', 'name', 'email', 'action'];
   public dataSource = new MatTableDataSource<User>();
+  public searchForms = new FormGroup({
+    name: new FormControl('', []),
+    email: new FormControl('', []),
+  });
 
   public users: User[] = [];
 
@@ -49,6 +54,7 @@ export class UserListComponent implements OnInit {
   }
 
   addUserDialog(): void {
+    this.dialogSvc.isEditUser = false;
     const dialogRef = this.dialog.open(UserAddComponent, {
       width: '600px',
     });
@@ -69,6 +75,28 @@ export class UserListComponent implements OnInit {
 
   deleteUser(user: any, index: any): void {
     console.log("Delete :: ", user, index)
+  }
+
+  searchUser(): void {
+    const user = {      
+      name: this.searchForms.value.name,
+      email: this.searchForms.value.email,
+    };
+    if (user.name === "" && user.email === "") {
+      this.getUserList();
+    }
+    this.userSvc.searchUser(user).subscribe((data) => {
+      if (data.length > 0) {
+        this.users = data;
+        this.showData();
+      } else {
+        this.users = [];
+        this.dataSource = new MatTableDataSource();
+        this.dataSource.paginator = this.paginator;
+      }
+    }, error => {
+      console.log('ERROR :: ', error);
+    });
   }
 
 }
