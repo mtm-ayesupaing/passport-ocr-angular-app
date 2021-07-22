@@ -25,9 +25,16 @@
         </div>
         <div class="dob-box">
             <mat-form-field class="full-width">
-                <input matInput [formControl]="searchForms.controls.expiryDate" [matDatepicker]="picker1" placeholder="Expiry Date">
+                <input matInput [formControl]="searchForms.controls.startDate" [matDatepicker]="picker1" placeholder="Start Date">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="dob-box">
+            <mat-form-field class="full-width">
+                <input matInput [formControl]="searchForms.controls.endDate" [matDatepicker]="picker2" placeholder="End Date">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>
         </div>
         <div class="search-btn-box">
@@ -37,7 +44,15 @@
                 class="search-button">
                 Search
             </button>
-        </div>        
+        </div>
+        <div class="cancel-btn-box">
+            <button mat-raised-button
+                color="primary"
+                (click)="cancelFiltering()" 
+                class="cancel-button">
+                Cancel
+            </button>
+        </div>     
     </div>
 
     <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8 passport-table">
@@ -83,5 +98,5 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-     
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
 </mat-card>

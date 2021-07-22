@@ -1,6 +1,10 @@
 .passport-table {
     width: 100%;
   }
+
+  tr.mat-row, tr.mat-footer-row {
+    height: 46px;
+  }
   
   .passport-button-container {
     margin-top: 8px;
@@ -24,8 +28,15 @@
     border: 1px solid rgb(135, 135, 206);
   }
 
-  .name-box, .passport-no-box, .dob-box, .search-btn-box {
+  .name-box, .passport-no-box, .dob-box {
     width: 20%;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .search-btn-box, .cancel-btn-box {
+    width: 5%;
     display: inline-block;
     margin-left: 10px;
     margin-right: 10px;
