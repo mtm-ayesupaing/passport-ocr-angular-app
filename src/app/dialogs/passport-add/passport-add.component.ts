@@ -129,9 +129,7 @@ export class PassportAddComponent implements OnInit {
 
   async checkDuplicate(params: any): Promise<any> {
     return new Promise((resolve, reject) => {
-      const targetPeriods = [];
-      let uniquePeriod: any = [];
-      this.passportSvc.searchPassport(params.passportNo).subscribe(
+      this.passportSvc.getPassportNo(params.passportNo).subscribe(
         async (datas: any) => {
             resolve(datas);
             return;
