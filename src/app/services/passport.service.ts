@@ -20,12 +20,12 @@ export class PassportService {
     );
   }
 
-  searchPassport(param: any): Observable<any> {
-    return this.http.get(`${environment.apiEndpoint}searchPassport/${param}`);
+  getPassportNo(param: any): Observable<any> {
+    return this.http.get(`${environment.apiEndpoint}getPassportNo/${param}`);
   }
 
-  searchData(body: any): Observable<any> {
-    return this.http.post(`${environment.apiEndpoint}searchData`, body);
+  searchPassport(body: any): Observable<any> {
+    return this.http.post(`${environment.apiEndpoint}searchPassport`, body);
   }
 
   savePassport(body: any): Observable<any> {

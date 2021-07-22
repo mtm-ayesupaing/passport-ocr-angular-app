@@ -116,7 +116,7 @@ export class PassportListComponent implements OnInit {
       name: this.searchForms.value.name,
       expiryDate: this.searchForms.value.expiryDate,
     };
-    this.passportSvc.searchData(passport).subscribe((data) => {
+    this.passportSvc.searchPassport(passport).subscribe((data) => {
       console.log(data);
       if (data.length > 0) {
         this.passports = data;
