@@ -96,14 +96,13 @@ export class PassportAddComponent implements OnInit {
       passportNo: this.passportForms.value.passportNo,
       name: this.passportForms.value.name,
       nationality: this.passportForms.value.nationality,
-      dob: this.passportForms.value.dob,
+      dob: this.passportParam.dob,
       gender: this.passportForms.value.gender,
-      issueDate: this.passportForms.value.issueDate,
-      expiryDate: this.passportForms.value.expiryDate,
+      issueDate: this.passportParam.issue_date,
+      expiryDate: this.passportParam.expiry_date,
       birthPlace: this.passportForms.value.birthPlace,
       authority: this.passportForms.value.authority
     };
-
     if(this.passportModelSvc.type === 'save') { // save
       const duplicateData = await this.checkDuplicate(passport); // check duplicate
       console.log(duplicateData);

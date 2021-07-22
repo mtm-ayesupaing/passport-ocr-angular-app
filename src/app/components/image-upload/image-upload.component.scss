@@ -5,11 +5,16 @@
 
 .passport-image {
     padding-top: 20px;
-    width: 500px;
+    width: 42vw;
 }
 
-.convert-button, .process-button {
+.convert-button {
     margin-right: 10px;
+}
+
+.process-button {
+    margin-right: 10px;
+    margin-top: 15px;
 }
 
 .converted-text {
@@ -20,7 +25,7 @@
 .image-panel {
     float: left;
     width: 45vw;
-    height: 580px;
+    height: 630px;
     margin-top: 10px;
     margin-left: 20px;
 }
@@ -28,7 +33,7 @@
 .extracted-panel {
     float: right;
     width: 45vw;
-    height: 580px;
+    height: 630px;
     margin-top: 10px;
     margin-right: 20px;
 }
