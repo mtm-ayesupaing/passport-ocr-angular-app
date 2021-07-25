@@ -73,7 +73,7 @@ export class PassportListComponent implements OnInit {
     this.passportModelSvc.passportData = passport;
     this.passportModelSvc.type = 'update';
     const dialogRef = this.dialog.open(PassportAddComponent, {
-      width: '900px',
+      width: '40vw',
     });
     dialogRef.afterClosed().subscribe(() => {
     });

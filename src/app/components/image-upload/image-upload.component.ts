@@ -83,7 +83,7 @@ export class ImageUploadComponent implements OnInit {
 
   bindPassportData(): void {
     const dialogRef = this.dialog.open(PassportAddComponent, {
-      width: '900px',
+      width: '40vw',
     });
     dialogRef.afterClosed().subscribe(() => {
       

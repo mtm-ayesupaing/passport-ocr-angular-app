@@ -77,6 +77,16 @@ export class PassportAddComponent implements OnInit {
     return dateRes;
   }
 
+  async selectDate($event: any, kind: string): Promise<any> {
+    if (kind === 'dob') {
+      this.passportParam.dob = await this.getDateFormat($event.value);
+    } else if (kind === 'issueDate') {      
+      this.passportParam.issue_date = await this.getDateFormat($event.value);
+    } else if (kind === 'expiryDate') {      
+      this.passportParam.expiry_date = await this.getDateFormat($event.value);
+    }
+  }
+
   disableControl(): void {
     if (this.passportModelSvc.type === 'update') {
       this.passportForms.controls['passportType'].disable();
@@ -91,9 +101,9 @@ export class PassportAddComponent implements OnInit {
 
   async savePassportData(): Promise<void> {
     const passport = {
-      passportType: this.passportForms.value.passportType,
-      countryCode: this.passportForms.value.countryCode,
-      passportNo: this.passportForms.value.passportNo,
+      passportType: this.passportParam.passport_type,
+      countryCode: this.passportParam.country_code,
+      passportNo: this.passportParam.passport_no,
       name: this.passportForms.value.name,
       nationality: this.passportForms.value.nationality,
       dob: this.passportParam.dob,
