@@ -31,15 +31,10 @@ export class PassportListComponent implements OnInit {
   public passports: Passport[] = [];
   public csvData: any; 
   public searchForms = new FormGroup({
-    passportNo: new FormControl('', [
-      Validators.required,
-    ]),
-    name: new FormControl('', [
-      Validators.required,
-    ]),
-    expiryDate: new FormControl('', [
-      Validators.required,
-    ]),
+    passportNo: new FormControl(''),
+    name: new FormControl(''),
+    startDate: new FormControl(''),
+    endDate: new FormControl(''),
   });
   constructor(
     private dialog: MatDialog,
@@ -111,10 +106,16 @@ export class PassportListComponent implements OnInit {
 
 
   searchPassport(): void {
+    if ( (this.searchForms.value.startDate && (this.searchForms.value.endDate === null || this.searchForms.value.endDate === '')) || 
+      (this.searchForms.value.endDate && (this.searchForms.value.startDate === null || this.searchForms.value.startDate === ''))) {
+        this.snackBarSvc.open('Choose Both Start & End Date!!!', environment.snackBarShowingTime);
+        return;
+    }
     const passport = {
       passportNo: this.searchForms.value.passportNo,
       name: this.searchForms.value.name,
-      expiryDate: this.searchForms.value.expiryDate,
+      startDate: this.searchForms.value.startDate === null || '' ? '' : this.searchForms.value.startDate,
+      endDate: this.searchForms.value.endDate === null || '' ? '' : this.searchForms.value.endDate,
     };
     this.passportSvc.searchPassport(passport).subscribe((data) => {
       console.log(data);
@@ -132,5 +133,13 @@ export class PassportListComponent implements OnInit {
       console.log('ERROR :: ', error);
     });
 
+  }
+
+  cancelFiltering(): void {
+    this.searchForms.controls['name'].setValue('');
+    this.searchForms.controls['passportNo'].setValue('');
+    this.searchForms.controls['startDate'].setValue('');
+    this.searchForms.controls['endDate'].setValue('');
+    this.getPassportList();
   }
 }
