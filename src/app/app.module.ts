@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -41,6 +42,7 @@ import { PassportListComponent } from './components/passport-list/passport-list.
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    DragDropModule,
     FormsModule,
     HttpClientModule,
     MatMenuModule,
