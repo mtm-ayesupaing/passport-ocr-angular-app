@@ -15,7 +15,7 @@ export class ErrorMessage {
     };
 
     public APPLICATION_ERROR = {
-        AUTH: 'メールアドレスもしくはパスワードが登録されたものと違います。',
+        AUTH: 'Invalid email and password!',
         EXPIRED_TOKEN: 'tokenの有効期限が切れています。',
         SESSION_TIMEOUT: '長時間操作がなかったためログアウトしました。',
         OFFLINE: 'オフラインになりました。通信状況を確認し、再度お試しください。',

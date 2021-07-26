@@ -36,10 +36,6 @@ export class LoginAuthService {
     return new Promise((resolve, reject) => {
       this.http.post(loginUrl, body).subscribe((data: any) => {
         console.log("HERE", data);
-        // const user: StrapiUser = data;
-        // this.token = user.jwt;
-        // this.user = user.user;
-        // this.getUserInfo(user);
         resolve(data);
       },
         error => {

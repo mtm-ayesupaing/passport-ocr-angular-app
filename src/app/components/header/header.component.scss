@@ -2,10 +2,10 @@
 
 .header {
   color: map-get($color, "default");
-  width: 100%;
 
   .title {
-    margin: 0 30px 0 5px;
+    margin: 4px 20px 0 5px;
+    float: left;
 
     a {
       color: map-get($color, "default");
@@ -20,4 +20,17 @@
     color: #3C3C3C;
   }
 
+  .left-content {
+    float: left;
+    width: 95%;
+  }
+
+  .logout-item {
+    color: map-get($color, "default");
+    font-size: 14px;
+    text-decoration: none;
+    padding: 0 16px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
 }

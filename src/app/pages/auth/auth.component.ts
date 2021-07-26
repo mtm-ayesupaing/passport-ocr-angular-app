@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginAuthService } from 'src/app/services/login-auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ErrorMessage } from 'src/app/constants/errorMessage';
 
 @Component({
   selector: 'app-auth',
@@ -26,6 +27,7 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private loginService: LoginAuthService,
+    private errorMsg: ErrorMessage,
     private router: Router
   ) { }
 
@@ -33,15 +35,16 @@ export class AuthComponent implements OnInit {
   }
 
   login(): void {
-    // this.loginService.logout();
-    this.loginService.login(this.signInForm.value.email, this.signInForm.value.password).then(res => {
-      if (res) {
+    this.loginService.login(this.signInForm.value.email, this.signInForm.value.password).then(data => {
+      if (data.result) {
         console.log("Login Success");
         this.router.navigate(['/users']);
+      } else {
+        this.authFailureMessage = this.errorMsg.APPLICATION_ERROR.AUTH;
       }
     }).catch(error => {
       console.log('error ', error);
-      // this.authFailureMessage = this.clientMsg.APPLICATION_ERROR.AUTH;
+      this.authFailureMessage = this.errorMsg.APPLICATION_ERROR.AUTH;
     });
   }
 }

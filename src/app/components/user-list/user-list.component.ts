@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 import { ApiMessage } from 'src/app/constants/apiMessage';
 import { User } from 'src/app/models/models';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -30,9 +30,10 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private userSvc: UserService,
-    private router: Router,
+    private apiMsg: ApiMessage,
     private dialog: MatDialog,
-    private dialogSvc: DialogService
+    private dialogSvc: DialogService,
+    private snackBarSvc: SnackbarService
   ) { }
 
   ngOnInit(): void {
@@ -73,8 +74,13 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  deleteUser(user: any, index: any): void {
-    console.log("Delete :: ", user, index)
+  deleteUser(id: number): void {
+    this.userSvc.deleteUser(id).subscribe((data) => {
+      this.getUserList();
+      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
+    }, error => {
+      console.log('ERROR :: ', error);
+    });
   }
 
   searchUser(): void {

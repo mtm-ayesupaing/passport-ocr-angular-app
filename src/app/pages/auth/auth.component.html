@@ -3,32 +3,31 @@
     <mat-card-content>
       <form style="width: 100%" [formGroup]="signInForm">
         <!-- Email Input -->
-        <!-- <mat-error *ngIf="authFailureMessage">
-          {{clientMsg.APPLICATION_ERROR.AUTH}}
-        </mat-error> -->
+        <mat-error *ngIf="authFailureMessage">
+          {{errorMsg.APPLICATION_ERROR.AUTH}}
+        </mat-error>
         <mat-form-field style="width: 100%">
           <input type="email" formControlName="email" matInput placeholder="メールアドレス">
-          <!-- <mat-error *ngIf="signInForm.controls.email.hasError('required')">
-            {{clientMsg.FORMAT_ERROR.REQUIRED('Email')}}
+          <mat-error *ngIf="signInForm.controls.email.hasError('required')">
+            {{errorMsg.FORMAT_ERROR.REQUIRED('Email')}}
           </mat-error>
           <mat-error *ngIf="signInForm.controls.email.hasError('email')">
-            {{clientMsg.FORMAT_ERROR.DATA_FORMAT('Email', 'xxxxx@xx.xx')}}
-  
-          </mat-error> -->
+            {{errorMsg.FORMAT_ERROR.DATA_FORMAT('Email', 'xxxxx@xx.xx')}}  
+          </mat-error>
         </mat-form-field>
   
         <!-- Password Input -->
         <mat-form-field class="form-filed">
           <input matInput type="password" formControlName="password" placeholder="パスワード">
-          <!-- <mat-error *ngIf="signInForm.controls.password.hasError('required')">
-            {{clientMsg.FORMAT_ERROR.REQUIRED('パスワード')}}
+          <mat-error *ngIf="signInForm.controls.password.hasError('required')">
+            {{errorMsg.FORMAT_ERROR.REQUIRED('パスワード')}}
           </mat-error>
           <mat-error *ngIf="signInForm.controls.password.hasError('minlength')">
-            {{clientMsg.FORMAT_ERROR.MIN_LENGTH('パスワード', 8)}}
+            {{errorMsg.FORMAT_ERROR.MIN_LENGTH('パスワード', 8)}}
           </mat-error>
           <mat-error *ngIf="signInForm.controls.password.hasError('maxlength')">
-            {{clientMsg.FORMAT_ERROR.MAX_LENGTH('パスワード', 100)}}
-          </mat-error> -->
+            {{errorMsg.FORMAT_ERROR.MAX_LENGTH('パスワード', 100)}}
+          </mat-error>
         </mat-form-field>
         <div class="btn-block">
           <button mat-raised-button color="primary" class="login-button"
