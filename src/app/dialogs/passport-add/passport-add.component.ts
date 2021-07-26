@@ -73,7 +73,18 @@ export class PassportAddComponent implements OnInit {
 
   async getDateFormat(date: any): Promise<any> {
     if (!date) return '';
-    const dateRes = moment(new Date(date)).format('YYYY-MM-DD');
+    const dateArr = date.split(' ');
+    let combineDate = '';
+    let dateRes : any;
+    if (dateArr.length > 3) {
+      const convertedDay = !isNaN(Number(dateArr[0].toString())) ?  dateArr[0] :  dateArr[1];
+      const convertedMonth = !isNaN(Number(dateArr[0].toString())) ?  dateArr[1] :  dateArr[2];
+      const convertedYear = !isNaN(Number(dateArr[0].toString())) ?  dateArr[2] :  dateArr[3];
+      combineDate = convertedDay + ' ' + convertedMonth + ' ' + convertedYear;
+      dateRes = moment(new Date(combineDate)).format('YYYY-MM-DD');
+    } else if (dateArr.length === 3) {
+      dateRes = moment(new Date(date)).format('YYYY-MM-DD');
+    }
     return dateRes;
   }
 
