@@ -73,17 +73,34 @@ export class PassportAddComponent implements OnInit {
 
   async getDateFormat(date: any): Promise<any> {
     if (!date) return '';
-    const dateRes = moment(new Date(date)).format('YYYY-MM-DD');
-    return dateRes;
+    if (this.passportModelSvc.type === 'update') {
+      return moment(new Date(date)).format('YYYY-MM-DD');
+    } else {
+      const monthArr = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '0CT', 'N0V'];
+      let month = ''; let day = ''; let year = ''; 
+      await monthArr.forEach((val: any) => {
+        if(date.indexOf(val) !== -1) {
+          month = val;
+          return;
+        }
+      });
+      if(month) {
+        const dateArr = date.split(month);
+        console.log(dateArr);
+        day = dateArr[0].match(/\d/g).join("");
+        year = dateArr[1].match(/\d/g).join("");
+        return moment(new Date(day + ' ' + month.replace('0', 'O') + ' ' + year)).format('YYYY-MM-DD');
+      }
+    }
   }
 
   async selectDate($event: any, kind: string): Promise<any> {
     if (kind === 'dob') {
-      this.passportParam.dob = await this.getDateFormat($event.value);
+      this.passportParam.dob = moment(new Date($event.value)).format('YYYY-MM-DD');
     } else if (kind === 'issueDate') {      
-      this.passportParam.issue_date = await this.getDateFormat($event.value);
+      this.passportParam.issue_date = moment(new Date($event.value)).format('YYYY-MM-DD');
     } else if (kind === 'expiryDate') {      
-      this.passportParam.expiry_date = await this.getDateFormat($event.value);
+      this.passportParam.expiry_date = moment(new Date($event.value)).format('YYYY-MM-DD');
     }
   }
 
