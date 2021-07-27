@@ -73,17 +73,37 @@ export class PassportAddComponent implements OnInit {
 
   async getDateFormat(date: any): Promise<any> {
     if (!date) return '';
-    const dateStr = date.day + '-' + date.month + '-' + date.year;
-    return moment(new Date(dateStr)).format('YYYY-MM-DD');
+    if (this.passportModelSvc.type === 'update') {
+      return moment(new Date(date)).format('YYYY-MM-DD');
+    } else {
+      const dateArr = date.split(' ');
+      let dateRes : any = [];
+      const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '0CT', 'N0V'];
+      dateArr.forEach((val: any) => {
+        console.log(val);
+        if (month.indexOf(val) !== -1 && val === '0CT') {
+          dateRes['month'] = 'OCT';
+        } else if (month.indexOf(val) !== -1 && val === 'N0V') {
+          dateRes['month'] = 'NOV';
+        } else if (month.indexOf(val) !== -1) {
+          dateRes['month'] = val;
+        } else if (!isNaN(Number(val)) && val.length === 2) {
+          dateRes['day'] = val;
+        } else if (!isNaN(Number(val)) && val.length === 4) {
+          dateRes['year'] = val;
+        }
+      });
+      return moment(new Date(dateRes.day + ' ' + dateRes.month + ' ' + dateRes.year)).format('YYYY-MM-DD');
+    }
   }
 
   async selectDate($event: any, kind: string): Promise<any> {
     if (kind === 'dob') {
-      this.passportParam.dob = await this.getDateFormat($event.value);
+      this.passportParam.dob = moment(new Date($event.value)).format('YYYY-MM-DD');
     } else if (kind === 'issueDate') {      
-      this.passportParam.issue_date = await this.getDateFormat($event.value);
+      this.passportParam.issue_date = moment(new Date($event.value)).format('YYYY-MM-DD');
     } else if (kind === 'expiryDate') {      
-      this.passportParam.expiry_date = await this.getDateFormat($event.value);
+      this.passportParam.expiry_date = moment(new Date($event.value)).format('YYYY-MM-DD');
     }
   }
 
