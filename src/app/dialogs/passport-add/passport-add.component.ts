@@ -76,24 +76,21 @@ export class PassportAddComponent implements OnInit {
     if (this.passportModelSvc.type === 'update') {
       return moment(new Date(date)).format('YYYY-MM-DD');
     } else {
-      const dateArr = date.split(' ');
-      let dateRes : any = [];
-      const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '0CT', 'N0V'];
-      dateArr.forEach((val: any) => {
-        console.log(val);
-        if (month.indexOf(val) !== -1 && val === '0CT') {
-          dateRes['month'] = 'OCT';
-        } else if (month.indexOf(val) !== -1 && val === 'N0V') {
-          dateRes['month'] = 'NOV';
-        } else if (month.indexOf(val) !== -1) {
-          dateRes['month'] = val;
-        } else if (!isNaN(Number(val)) && val.length === 2) {
-          dateRes['day'] = val;
-        } else if (!isNaN(Number(val)) && val.length === 4) {
-          dateRes['year'] = val;
+      const monthArr = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '0CT', 'N0V'];
+      let month = ''; let day = ''; let year = ''; 
+      await monthArr.forEach((val: any) => {
+        if(date.indexOf(val) !== -1) {
+          month = val;
+          return;
         }
       });
-      return moment(new Date(dateRes.day + ' ' + dateRes.month + ' ' + dateRes.year)).format('YYYY-MM-DD');
+      if(month) {
+        const dateArr = date.split(month);
+        console.log(dateArr);
+        day = dateArr[0].match(/\d/g).join("");
+        year = dateArr[1].match(/\d/g).join("");
+        return moment(new Date(day + ' ' + month.replace('0', 'O') + ' ' + year)).format('YYYY-MM-DD');
+      }
     }
   }
 
