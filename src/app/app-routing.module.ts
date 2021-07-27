@@ -15,22 +15,22 @@ const routes: Routes = [
   },
   {
     path: 'users',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: UserListComponent
   },
   {
     path: 'image-upload',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: ImageUploadComponent
   },
   {
     path: 'add-passport',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: PassportAddComponent
   },
   {
     path: 'passport-list',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     component: PassportListComponent
   },
   {

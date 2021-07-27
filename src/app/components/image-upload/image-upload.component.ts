@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, FormControl } from "@angular/forms";
 import { PassportModelService } from 'src/app/service-models/passport-model.service';
 import { ActivatedRoute, Router} from '@angular/router';
 import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.component';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-image-upload',
@@ -35,8 +37,15 @@ export class ImageUploadComponent implements OnInit {
     private dialog: MatDialog,
     public formBuilder: FormBuilder,
     public router: Router,
-    public passportModelSvc: PassportModelService,
-  ) { }
+    public passportModelSvc: PassportModelService,    
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      "convertedText",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/convert_text_icon.svg")
+    );
+  }
 
   ngOnInit(): void {
   }

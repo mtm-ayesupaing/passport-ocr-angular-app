@@ -3,6 +3,7 @@
     <span class="title">Passport OCR</span>
     <button
       mat-icon-button
+      *ngIf="enabledRoute"
       [matMenuTriggerFor]="menu"
       (click)="onClickMenuIcon()">
       <mat-icon>menu</mat-icon>
@@ -20,12 +21,12 @@
       <a routerLink="/image-upload">Convert Image</a>
     </button>    
     <button mat-menu-item>
-      <mat-icon class="icon person-icon">person</mat-icon>
+      <mat-icon svgIcon="passport">passport</mat-icon>
       <a routerLink="/passport-list">Passport OCR</a>
     </button>
   </mat-menu>
 
-  <div >
+  <div *ngIf="enabledRoute">
     <a (click)="logout()">
       <span class="logout-item">ログアウト</span>
     </a>

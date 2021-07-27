@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { StrapiUser, User } from '../models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +12,8 @@ export class LoginAuthService {
 
   private apiPath = 'login';
   private loginToken = "";
+  private isLogin = false;
   private apiEndpoint = environment.apiEndpoint;
-  private loginUser!: User;
 
   private currentUserInfo = new BehaviorSubject({});
   public currentUserInfoObservable = this.currentUserInfo.asObservable();
@@ -24,7 +23,6 @@ export class LoginAuthService {
     protected router: Router,
   ) {
     this.token = String(localStorage.getItem('token'));
-    // this.user = JSON.parse(localStorage.getItem('user')) as User;
   }
 
   login(email: string, password: string): Promise<any> {
@@ -36,6 +34,7 @@ export class LoginAuthService {
     return new Promise((resolve, reject) => {
       this.http.post(loginUrl, body).subscribe((data: any) => {
         console.log("HERE", data);
+        this.isLogin = true;
         resolve(data);
       },
         error => {
@@ -54,7 +53,7 @@ export class LoginAuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.token !== 'null' ? true : false;
+    return this.isLogin;
   }
 
   get token(): string {
@@ -66,20 +65,10 @@ export class LoginAuthService {
     localStorage.setItem('token', tokenStr);
   }
 
-  get user(): User {
-    return this.loginUser;
-  }
-
-  set user(user: User) {
-    this.loginUser = user;
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-
   public clearAll(): any {
     this.loginToken = "";
     this.token = "";
-    // this.loginUser = null;
-    // this.user = null;
+    this.isLogin = false;
     localStorage.clear();
   }
 
