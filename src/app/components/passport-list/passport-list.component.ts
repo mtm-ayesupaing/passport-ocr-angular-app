@@ -26,7 +26,7 @@ const EXCEL_EXTENSION = '.xlsx';
 export class PassportListComponent implements OnInit {
   @ViewChild('table') table: ElementRef | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  public displayedColumns: string[] = ['passportNo', 'passportType', 'countryCode', 'name', 'expiryDate', 'action'];
+  public displayedColumns: string[] = ['passportType', 'countryCode', 'passportNo', 'name', 'dob', 'gender', 'issueDate', 'expiryDate', 'action'];
   public dataSource = new MatTableDataSource<Passport>();
   public passports: Passport[] = [];
   public csvData: any; 
@@ -106,11 +106,12 @@ export class PassportListComponent implements OnInit {
 
 
   searchPassport(): void {
-    if ( (this.searchForms.value.startDate && (this.searchForms.value.endDate === null || this.searchForms.value.endDate === '')) || 
-      (this.searchForms.value.endDate && (this.searchForms.value.startDate === null || this.searchForms.value.startDate === ''))) {
-        this.snackBarSvc.open('Choose Both Start & End Date!!!', environment.snackBarShowingTime);
-        return;
-    }
+    if (this.searchForms.value.passportNo === '' && this.searchForms.value.name === '' &&
+      (this.searchForms.value.endDate === null || this.searchForms.value.endDate === '') &&
+      (this.searchForms.value.startDate === null || this.searchForms.value.startDate === '')) {
+      this.getPassportList();
+      return;
+    } 
     const passport = {
       passportNo: this.searchForms.value.passportNo,
       name: this.searchForms.value.name,
