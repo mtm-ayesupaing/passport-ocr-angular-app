@@ -12,7 +12,6 @@ export class LoginAuthService {
 
   private apiPath = 'login';
   private loginToken = "";
-  private isLogin = false;
   private apiEndpoint = environment.apiEndpoint;
 
   private currentUserInfo = new BehaviorSubject({});
@@ -33,8 +32,7 @@ export class LoginAuthService {
     };
     return new Promise((resolve, reject) => {
       this.http.post(loginUrl, body).subscribe((data: any) => {
-        console.log("HERE", data);
-        this.isLogin = true;
+        this.token = data.token;
         resolve(data);
       },
         error => {
@@ -53,7 +51,7 @@ export class LoginAuthService {
   }
 
   isAuthenticated(): boolean {
-    return this.isLogin;
+    return this.token !== 'null' ? true : false;
   }
 
   get token(): string {
@@ -68,7 +66,6 @@ export class LoginAuthService {
   public clearAll(): any {
     this.loginToken = "";
     this.token = "";
-    this.isLogin = false;
     localStorage.clear();
   }
 

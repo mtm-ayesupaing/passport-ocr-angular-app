@@ -36,7 +36,7 @@ export class AuthComponent implements OnInit {
 
   login(): void {
     this.loginService.login(this.signInForm.value.email, this.signInForm.value.password).then(data => {
-      if (data.result) {
+      if (data.result && data.token) {
         console.log("Login Success");
         this.router.navigate(['/users']);
       } else {
