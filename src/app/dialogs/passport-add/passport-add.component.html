@@ -23,7 +23,7 @@
 
             <div class="right-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.passportNo" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.">
+                    <input matInput [formControl]="passportForms.controls.passportNo" pattern="^[a-zA-Z]{2}[0-9]{6}$" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.">
                 </mat-form-field>
             </div>
 
