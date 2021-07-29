@@ -1,6 +1,5 @@
+<h1 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane">Passport Form</h1>
 <mat-card>
-    <h1 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane">Passport Form</h1>
-
     <div mat-dialog-content class="content">
         <form style="width: 100%" [formGroup]="passportForms">
             <div class="left-content">
@@ -23,7 +22,7 @@
 
             <div class="right-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.passportNo" pattern="^[a-zA-Z]{2}[0-9]{6}$" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.">
+                    <input matInput [formControl]="passportForms.controls.passportNo" pattern="^[a-zA-Z]{2}[0-9]{6}$" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.(2 letters & 6 digits)">
                 </mat-form-field>
             </div>
 
@@ -74,11 +73,11 @@
         </form>
     </div>
     <div mat-dialog-actions class="demo-button-container">
-        <button mat-raised-button (click)="savePassportData()" [disabled]="!passportForms.valid"  class="demo-button">
-            Save
+        <button mat-raised-button color="primary" (click)="savePassportData()" [disabled]="!passportForms.valid"  class="demo-button">
+            {{actionBtn}}
         </button>
 
-        <button mat-raised-button (click)="onCancelClick()"  class="cancel-button">
+        <button mat-raised-button color="primary" (click)="onCancelClick()"  class="cancel-button">
             Cancel
         </button>
     </div>

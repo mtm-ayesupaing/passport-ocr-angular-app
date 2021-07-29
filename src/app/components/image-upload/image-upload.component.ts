@@ -83,7 +83,7 @@ export class ImageUploadComponent implements OnInit {
         (res: any) => {
           this.convertedData = res.raw_data;
           this.passportModelSvc.passportData = res;
-          this.passportModelSvc.type = 'save';
+          this.passportModelSvc.type = 'Save';
         },
         (err: any) => {
         })
