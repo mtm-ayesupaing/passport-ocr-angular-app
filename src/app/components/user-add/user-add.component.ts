@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  NgForm,
+  ValidationErrors,
+  ValidatorFn,
+  Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { ApiMessage } from 'src/app/constants/apiMessage';
 import { ErrorMessage } from 'src/app/constants/errorMessage';
 import { User } from 'src/app/models/models';
@@ -10,12 +18,42 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from '../../../environments/environment';
 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const pwd = control?.parent?.value['password'];
+    const confirmPwd = control?.parent?.value['confirmPassword'];
+    return pwd !== confirmPwd ? true : false;
+  }
+}
+
 @Component({
   selector: 'app-user-add',
   templateUrl: './user-add.component.html',
   styleUrls: ['./user-add.component.scss']
 })
 export class UserAddComponent implements OnInit {
+  public users: User[] = [];
+  public user = {
+    name: null,
+    email: null,
+    pwd: null
+  };  
+  public isEdit = false;
+  public modifiedUser = {
+    id: 0,
+    name: "",
+    email: "",
+    pwd: ""
+  }
+  public userTitle = "";
+  public lblUserBtn = "";
+
+  confirmedValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const pwd = control.get('password')?.value;
+    const confirmPwd = control.get('confirmPassword')?.value;
+    return pwd !== confirmPwd ? { notSame: true } : null
+  }
+
   public userForms = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -29,35 +67,22 @@ export class UserAddComponent implements OnInit {
       Validators.minLength(8),
       Validators.maxLength(100)
     ]),
+    confirmPassword: new FormControl(''),
     role: new FormControl('', [
       Validators.required,
     ])
+  }, {
+    validators: this.confirmedValidator
   });
 
-  public users: User[] = [];
-  public user = {
-    name: null,
-    email: null,
-    pwd : null
-  };
-  public valid = true;
-  public isEdit = false;
-  public modifiedUser = {
-    id: 0,
-    name: "",
-    email: "",
-    pwd: ""
-  }
-  public userTitle = "";
-  public lblUserBtn = "";
+  matcher = new MyErrorStateMatcher();
 
   constructor(
     private errorMsg: ErrorMessage,
     private apiMsg: ApiMessage,
-    private snackBarSvc: SnackbarService,    
+    private snackBarSvc: SnackbarService,
     private userSvc: UserService,
     private dialogSvc: DialogService,
-    private router: Router,
     public dialogRef: MatDialogRef<UserAddComponent>,
   ) { }
 
@@ -73,22 +98,23 @@ export class UserAddComponent implements OnInit {
   }
 
   isValid(): boolean {
-    if (!this.isEdit) {
-      if (this.userForms.value.name === "" || this.userForms.value.email === "" ||
-        this.userForms.value.password === "") {
-        this.valid = false;    
-      }
-    } else {
-      if (this.modifiedUser.name === "" || this.modifiedUser.email === "" ||
-        this.userForms.value.password === "") {
-        this.valid = false;    
-      }
+    let valid = true;
+    const name = this.isEdit ? this.modifiedUser.name : this.userForms.value.name;
+    const email = this.isEdit ? this.modifiedUser.email : this.userForms.value.email;
+    const pwd = this.userForms.value.password;
+    const confirmPwd = this.userForms.value.confirmPassword;
+    if (name === "" || email === "" ||
+      pwd === "" || confirmPwd === "") {
+      valid = false;
     }
-    return this.valid;
+    if (pwd !== confirmPwd) {
+      valid = false;
+      this.snackBarSvc.open(this.errorMsg.FORMAT_ERROR.INVALID_PASSWORD('Confirm Password'), environment.snackBarShowingTime);
+    }
+    return valid;
   }
 
   addUser(): void {
-    
     if (!this.isValid()) {
       return;
     }
@@ -104,24 +130,21 @@ export class UserAddComponent implements OnInit {
           this.snackBarSvc.open(data, environment.snackBarShowingTime);
         } else {
           this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.CREATE_USER, environment.snackBarShowingTime);
-          // this.disableFlag = false;
           this.dialogRef.close(true);
-        }        
+        }
       }, error => {
         console.log('ERROR :: ', error);
       });
-    } else {      
+    } else {
       this.modifiedUser.pwd = this.userForms.value.password;
       this.userSvc.updateUser(this.modifiedUser.id, this.modifiedUser).subscribe((data) => {
         this.users.unshift(data);
         this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.UPDATE_USER, environment.snackBarShowingTime);
-        // this.disableFlag = false;
         this.dialogRef.close(true);
       }, error => {
         console.log('ERROR :: ', error);
       });
     }
-    
   }
 
 }

@@ -7,7 +7,7 @@
           {{errorMsg.APPLICATION_ERROR.AUTH}}
         </mat-error>
         <mat-form-field style="width: 100%">
-          <input type="email" formControlName="email" matInput placeholder="メールアドレス">
+          <input type="email" formControlName="email" matInput placeholder="Email">
           <mat-error *ngIf="signInForm.controls.email.hasError('required')">
             {{errorMsg.FORMAT_ERROR.REQUIRED('Email')}}
           </mat-error>
@@ -18,20 +18,20 @@
   
         <!-- Password Input -->
         <mat-form-field class="form-filed">
-          <input matInput type="password" formControlName="password" placeholder="パスワード">
+          <input matInput type="password" formControlName="password" placeholder="Password">
           <mat-error *ngIf="signInForm.controls.password.hasError('required')">
-            {{errorMsg.FORMAT_ERROR.REQUIRED('パスワード')}}
+            {{errorMsg.FORMAT_ERROR.REQUIRED('Password')}}
           </mat-error>
           <mat-error *ngIf="signInForm.controls.password.hasError('minlength')">
-            {{errorMsg.FORMAT_ERROR.MIN_LENGTH('パスワード', 8)}}
+            {{errorMsg.FORMAT_ERROR.MIN_LENGTH('Password', 8)}}
           </mat-error>
           <mat-error *ngIf="signInForm.controls.password.hasError('maxlength')">
-            {{errorMsg.FORMAT_ERROR.MAX_LENGTH('パスワード', 100)}}
+            {{errorMsg.FORMAT_ERROR.MAX_LENGTH('Password', 100)}}
           </mat-error>
         </mat-form-field>
         <div class="btn-block">
           <button mat-raised-button color="primary" class="login-button"
-            (click)="login()">ログイン</button>
+            (click)="login()">Login</button>
             <!-- <app-dot-loader *ngIf="spinnerService.visibility | async"></app-dot-loader></button>
           <a class="password-reset">パスワードを忘れた
           </a> -->

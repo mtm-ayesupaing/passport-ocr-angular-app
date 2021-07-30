@@ -27,6 +27,7 @@ export class UserListComponent implements OnInit {
   });
 
   public users: User[] = [];
+  public currentUser : any;
 
   constructor(
     private userSvc: UserService,
@@ -34,7 +35,9 @@ export class UserListComponent implements OnInit {
     private dialog: MatDialog,
     private dialogSvc: DialogService,
     private snackBarSvc: SnackbarService
-  ) { }
+  ) {
+    this.currentUser = localStorage.getItem("currentUser");
+  }
 
   ngOnInit(): void {
     this.getUserList();
