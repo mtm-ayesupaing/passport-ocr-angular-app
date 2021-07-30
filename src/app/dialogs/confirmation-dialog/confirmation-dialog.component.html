@@ -1,0 +1,10 @@
+<h1 mat-dialog-title cdkDrag cdkDragRootElement=".cdk-overlay-pane">Delete Confirmation</h1>
+<mat-card>
+    <div mat-dialog-content class="content">
+        <p>Are you sure you want to delete this?</p>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" (click)="onConfirm()">Yes</button>
+        <button mat-raised-button color="primary" (click)="onDismiss()">No</button>
+      </div>
+</mat-card>
