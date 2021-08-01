@@ -12,12 +12,10 @@ export class ApiMessage {
   };
 
   public APPLICATION_CONFIRM = {
-    // ROLLBACK: 'ロールバックしますがよろしいでしょうか?',
-    DELETE: '削除しますがよろしいでしょうか?',
-    // DELETE_COKLUSTER_FIELDS: '行目を削除しますがよろしいでしょうか?'
+    DELETE: 'Are you sure you want to delete it?',
   };
 
   public ERROR = {
-    COMMON_ERROR: 'エラーが発生しました。',
+    COMMON_ERROR: 'An error has occured',
   };
 }

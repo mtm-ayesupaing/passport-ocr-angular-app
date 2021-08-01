@@ -18,17 +18,17 @@
     </button>
     <button mat-menu-item>
       <mat-icon class="icon person-icon">transform</mat-icon>
-      <a routerLink="/image-upload">Convert Image</a>
+      <a routerLink="/image-upload">Image to Text</a>
     </button>    
     <button mat-menu-item>
       <mat-icon svgIcon="passport">passport</mat-icon>
-      <a routerLink="/passport-list">Passport OCR</a>
+      <a routerLink="/passport-list">Passport List</a>
     </button>
   </mat-menu>
 
   <div *ngIf="enabledRoute">
     <a (click)="logout()">
-      <span class="logout-item">ログアウト</span>
+      <span class="logout-item">Logout</span>
     </a>
   </div>
 </mat-toolbar>

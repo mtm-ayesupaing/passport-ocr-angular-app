@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class LoginAuthService {
 
   private apiPath = 'login';
   private loginToken = "";
+  private decoded : any;
   private apiEndpoint = environment.apiEndpoint;
 
   private currentUserInfo = new BehaviorSubject({});
@@ -33,6 +35,8 @@ export class LoginAuthService {
     return new Promise((resolve, reject) => {
       this.http.post(loginUrl, body).subscribe((data: any) => {
         this.token = data.token;
+        this.decoded = jwt_decode(this.token);
+        localStorage.setItem("currentUser", this.decoded["email"]);
         resolve(data);
       },
         error => {
