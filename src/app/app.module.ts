@@ -24,6 +24,7 @@ import { UserAddComponent } from './components/user-add/user-add.component';
 import { ImageUploadComponent } from './components/image-upload/image-upload.component';
 import { PassportAddComponent } from './dialogs/passport-add/passport-add.component';
 import { PassportListComponent } from './components/passport-list/passport-list.component';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PassportListComponent } from './components/passport-list/passport-list.
     UserAddComponent,
     ImageUploadComponent,
     PassportAddComponent,
-    PassportListComponent
+    PassportListComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     AngularMaterialModule,

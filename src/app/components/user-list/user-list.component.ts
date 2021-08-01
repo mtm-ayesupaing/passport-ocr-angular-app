@@ -10,6 +10,7 @@ import { DialogService } from 'src/app/services/dialog.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { UserAddComponent } from '../user-add/user-add.component';
+import { ConfirmationDialogComponent } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -78,12 +79,21 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(id: number): void {
-    this.userSvc.deleteUser(id).subscribe((data) => {
-      this.getUserList();
-      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
-    }, error => {
-      console.log('ERROR :: ', error);
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      maxWidth: "400px",
     });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      const result = dialogResult;
+      if (result) {
+        this.userSvc.deleteUser(id).subscribe((data) => {
+          this.getUserList();
+          this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
+        }, error => {
+          console.log('ERROR :: ', error);
+        });
+      }
+    }); 
   }
 
   searchUser(): void {

@@ -11,6 +11,7 @@ import { environment } from '../../../environments/environment';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PassportModelService } from 'src/app/service-models/passport-model.service';
 import { PassportAddComponent } from 'src/app/dialogs/passport-add/passport-add.component';
+import { ConfirmationDialogComponent } from 'src/app/dialogs/confirmation-dialog/confirmation-dialog.component';
 import * as moment from 'moment';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -71,20 +72,11 @@ export class PassportListComponent implements OnInit {
 
   editPassport(passport: any): void {
     this.passportModelSvc.passportData = passport;
-    this.passportModelSvc.type = 'update';
+    this.passportModelSvc.type = 'Update';
     const dialogRef = this.dialog.open(PassportAddComponent, {
       width: '40vw',
     });
     dialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
-  deletePassport(passportNo: any): void {
-    this.passportSvc.deletePassport(passportNo).subscribe((data) => {
-      this.getPassportList();      
-      this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
-    }, error => {
-      console.log('ERROR :: ', error);
     });
   }
 
@@ -103,7 +95,6 @@ export class PassportListComponent implements OnInit {
     });
     FileSaver.saveAs(data, fileName + EXCEL_EXTENSION);
   }
-
 
   searchPassport(): void {
     if (this.searchForms.value.passportNo === '' && this.searchForms.value.name === '' &&
@@ -142,5 +133,23 @@ export class PassportListComponent implements OnInit {
     this.searchForms.controls['startDate'].setValue('');
     this.searchForms.controls['endDate'].setValue('');
     this.getPassportList();
+  }
+
+  deletePassport(passportNo: any): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      maxWidth: "400px",
+    });
+
+    dialogRef.afterClosed().subscribe(dialogResult => {
+      const result = dialogResult;
+      if (result) {
+        this.passportSvc.deletePassport(passportNo).subscribe((data) => {
+          this.getPassportList();      
+          this.snackBarSvc.open(this.apiMsg.APPLICATION_RESULT.DELETE_USER, environment.snackBarShowingTime);
+        }, error => {
+          console.log('ERROR :: ', error);
+        });
+      }
+    }); 
   }
 }

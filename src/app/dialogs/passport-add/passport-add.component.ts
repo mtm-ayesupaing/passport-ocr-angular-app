@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiMessage } from 'src/app/constants/apiMessage';
 import { Passport } from 'src/app/models/models';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { PassportService } from 'src/app/services/passport.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PassportModelService } from 'src/app/service-models/passport-model.service';
@@ -53,6 +53,7 @@ export class PassportAddComponent implements OnInit {
   public passports: Passport[] = [];
   public passportParam: any;
   public disableInput : boolean = true;
+  public actionBtn = '';
   constructor(
     private snackBarSvc: SnackbarService,    
     private apiMsg: ApiMessage,
@@ -63,19 +64,33 @@ export class PassportAddComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.passportParam = this.passportModelSvc.passportData;
-    console.log(this.passportParam);
-    this.disableControl();  
     this.passportParam.dob = await this.getDateFormat(this.passportParam.dob);
     this.passportParam.issue_date = await this.getDateFormat(this.passportParam.issue_date);
     this.passportParam.expiry_date = await this.getDateFormat(this.passportParam.expiry_date);
     this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
+    this.actionBtn = this.passportModelSvc.type;
+    this.disableControl();  
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.passportForms.controls['passportType'].markAsTouched();
+      this.passportForms.controls['countryCode'].markAsTouched();
+      this.passportForms.controls['passportNo'].markAsTouched();
+      this.passportForms.controls['name'].markAsTouched();
+      this.passportForms.controls['nationality'].markAsTouched();
+      this.passportForms.controls['dob'].markAsTouched();
+      this.passportForms.controls['gender'].markAsTouched();
+      this.passportForms.controls['issueDate'].markAsTouched();
+      this.passportForms.controls['expiryDate'].markAsTouched();
+      this.passportForms.controls['birthPlace'].markAsTouched();
+      this.passportForms.controls['authority'].markAsTouched();
+    }, 0);
   }
 
   async getDateFormat(date: any): Promise<any> {
     if (!date) return '';
-    if (this.passportModelSvc.type === 'update') {
-      return moment(new Date(date)).format('YYYY-MM-DD');
-    } else {
+    if (this.passportModelSvc.type === 'Save' && moment(date, "YYYY-MM-DD", true).isValid() === false) {
       const monthArr = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '0CT', 'N0V'];
       let month = ''; let day = ''; let year = ''; 
       await monthArr.forEach((val: any) => {
@@ -86,11 +101,12 @@ export class PassportAddComponent implements OnInit {
       });
       if(month) {
         const dateArr = date.split(month);
-        console.log(dateArr);
         day = dateArr[0].match(/\d/g).join("");
         year = dateArr[1].match(/\d/g).join("");
         return moment(new Date(day + ' ' + month.replace('0', 'O') + ' ' + year)).format('YYYY-MM-DD');
       }
+    } else {
+      return moment(new Date(date)).format('YYYY-MM-DD');
     }
   }
 
@@ -105,7 +121,7 @@ export class PassportAddComponent implements OnInit {
   }
 
   disableControl(): void {
-    if (this.passportModelSvc.type === 'update') {
+    if (this.passportModelSvc.type === 'Update') {
       this.passportForms.controls['passportType'].disable();
       this.passportForms.controls['passportNo'].disable();
       this.passportForms.controls['countryCode'].disable();
@@ -130,9 +146,8 @@ export class PassportAddComponent implements OnInit {
       birthPlace: this.passportForms.value.birthPlace,
       authority: this.passportForms.value.authority
     };
-    if(this.passportModelSvc.type === 'save') { // save
+    if(this.passportModelSvc.type === 'Save') { // save
       const duplicateData = await this.checkDuplicate(passport); // check duplicate
-      console.log(duplicateData);
       if (duplicateData.length > 0) {
         this.snackBarSvc.open('Duplicate Passport No.', 5000);
         return;

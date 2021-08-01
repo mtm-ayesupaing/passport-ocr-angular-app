@@ -97,6 +97,15 @@ export class UserAddComponent implements OnInit {
     this.lblUserBtn = this.isEdit ? "Update" : "Save";
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.userForms.controls['name'].markAsTouched();
+      this.userForms.controls['email'].markAsTouched();
+      this.userForms.controls['password'].markAsTouched();
+      this.userForms.controls['role'].markAsTouched();
+    }, 0);
+  }
+
   isValid(): boolean {
     let valid = true;
     const name = this.isEdit ? this.modifiedUser.name : this.userForms.value.name;

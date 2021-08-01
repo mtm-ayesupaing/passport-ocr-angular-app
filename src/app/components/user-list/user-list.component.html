@@ -45,11 +45,11 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element; let i = index">
                 <div class="action" align="end">
-                    <button mat-raised-button color="default"
+                    <button mat-raised-button color="primary"
                         *ngIf="currentUser === element.email"
                         class="edit-button"
                         (click)="editUserDialog(element, i)">Edit</button>
-                    <button mat-raised-button color="default"
+                    <button mat-raised-button color="warn"
                         class="delete-button"
                         (click)="deleteUser(element.id)">Delete</button>
                 </div>
