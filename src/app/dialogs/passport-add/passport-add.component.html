@@ -22,13 +22,13 @@
 
             <div class="right-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [formControl]="passportForms.controls.passportNo" pattern="^[a-zA-Z]{2}[0-9]{6}$" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.(2 letters & 6 digits)">
+                    <input matInput [formControl]="passportForms.controls.passportNo" pattern="^[a-zA-Z]{2}[0-9]{6}$" [(ngModel)]="passportParam.passport_no" placeholder="Passport No.">
                 </mat-form-field>
             </div>
 
             <div class="left-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [matDatepicker]="picker1" [(ngModel)]="passportParam.dob" (dateChange)="selectDate($event, 'dob')" [formControl]="passportForms.controls.dob" placeholder="Choose DOB">
+                    <input matInput [matDatepicker]="picker1" [(ngModel)]="passportParam.dob" (dateChange)="selectDate($event, 'dob')" [formControl]="passportForms.controls.dob" placeholder="DOB">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
                 </mat-form-field>
@@ -45,7 +45,7 @@
 
             <div class="left-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [matDatepicker]="picker2" [(ngModel)]="passportParam.issue_date" (dateChange)="selectDate($event, 'issueDate')" [formControl]="passportForms.controls.issueDate" placeholder="Choose Issue date">
+                    <input matInput [matDatepicker]="picker2" [(ngModel)]="passportParam.issue_date" (dateChange)="selectDate($event, 'issueDate')" [formControl]="passportForms.controls.issueDate" placeholder="Issue date">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker  #picker2></mat-datepicker>
                 </mat-form-field>
@@ -53,7 +53,7 @@
 
             <div class="right-content">
                 <mat-form-field class="passport-full-width">
-                    <input matInput [matDatepicker]="picker3" [(ngModel)]="passportParam.expiry_date" (dateChange)="selectDate($event, 'expiryDate')" [formControl]="passportForms.controls.expiryDate" placeholder="Choose Expiry Date">
+                    <input matInput [matDatepicker]="picker3" [(ngModel)]="passportParam.expiry_date" (dateChange)="selectDate($event, 'expiryDate')" [formControl]="passportForms.controls.expiryDate" placeholder="Expiry Date">
                     <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                     <mat-datepicker #picker3></mat-datepicker>
                 </mat-form-field>
