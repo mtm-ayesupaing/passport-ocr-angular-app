@@ -67,7 +67,11 @@ export class PassportAddComponent implements OnInit {
     this.passportParam.dob = await this.getDateFormat(this.passportParam.dob);
     this.passportParam.issue_date = await this.getDateFormat(this.passportParam.issue_date);
     this.passportParam.expiry_date = await this.getDateFormat(this.passportParam.expiry_date);
-    this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
+    if (this.passportParam.gender) {
+      this.passportParam.gender = this.passportParam.gender.indexOf('F') !== -1 ? 'Female' : 'Male';
+    } else if (this.passportParam.raw_data.includes('\nF\n')) {
+      this.passportParam.gender = "Female"
+    }    
     this.actionBtn = this.passportModelSvc.type;
     this.disableControl();  
   }
@@ -94,7 +98,7 @@ export class PassportAddComponent implements OnInit {
       const monthArr = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', '0CT', 'N0V'];
       let month = ''; let day = ''; let year = ''; 
       await monthArr.forEach((val: any) => {
-        if(date.indexOf(val) !== -1) {
+        if(date && date.indexOf(val) !== -1) {
           month = val;
           return;
         }
